@@ -8,6 +8,50 @@ use Yii;
 
 class UserController extends ApiController
 {
+
+    /**
+     * GET_LIST GET http://my.api.url/user?sort=['id','ASC']&range=[0, 2]&filter={"status":'10'}
+     *  indexAction
+     *
+     * @SWG\Get(path="/user",
+     *     tags={"user"},
+     *     summary="获取用户列表",
+     *     description="测试直接返回一个array",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Parameter(
+     *        in = "query",
+     *        name = "sort",
+     *        description = "排序",
+     *        required = false,
+     *        type = "string",
+     *        default = "[""id"",""ASC""]",
+     *     ),
+     *     @SWG\Parameter(
+     *        in = "query",
+     *        name = "range",
+     *        description = "记录区间",
+     *        required = false,
+     *        type = "string",
+     *        default = "[0, 2]",
+     *     ),
+     *     @SWG\Parameter(
+     *        in = "query",
+     *        name = "filter",
+     *        description = "查询条件",
+     *        required = false,
+     *        type = "string",
+     *        default = "{""status"":""10""}",
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     )
+     * )
+     *
+     */
+
     public $modelClass = 'myzero1\rest\models\User';
      
     //注册-测试用

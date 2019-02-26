@@ -3,7 +3,7 @@ namespace myzero1\rest\components;
 use yii\web\Response;
 use yii\rest\ActiveController;
 use yii\filters\auth\HttpBearerAuth;
-use api\models\searches\ApiDataProvider;
+use myzero1\rest\components\ApiDataProvider;
 use yii\filters\RateLimiter;
 use yii\filters\Cors;
 
@@ -31,14 +31,16 @@ class ApiController extends ActiveController
         //     ],
         // ];
 
-        $behaviors['authenticator'] = [
-            'class' => HttpBearerAuth::className(),
-            'optional' => [
-                'login',  //认证排除登录接口
-                'reg' //认证排除测试注册用户
-            ],
-            'except'=> ['options'], //认证排除OPTIONS请求
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class' => HttpBearerAuth::className(),
+        //     'optional' => [
+        //         'login',  //认证排除登录接口
+        //         'reg', //认证排除测试注册用户
+        //         'mul', //认证排除测试注册用户
+        //         'user', //认证排除测试注册用户
+        //     ],
+        //     'except'=> ['options'], //认证排除OPTIONS请求
+        // ];
 
         # rate limit部分，速度的设置是在
         #   app\models\User::getRateLimit($request, $action)

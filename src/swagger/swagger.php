@@ -5,8 +5,8 @@ namespace myzero1\rest\swagger;
 /**
  * @SWG\Swagger(
  *     schemes={"http"},
- *     host="localhost:8080",
- *     basePath="/v1",
+ *     host="yii2rest2.test",
+ *     basePath="/rest",
  *     @SWG\Info(
  *         version="1.0.0",
  *         title="接口文档",
