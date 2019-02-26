@@ -5,7 +5,7 @@ namespace myzero1\rest\swagger;
 /**
  * @SWG\Swagger(
  *     schemes={"http"},
- *     host="yii2rest2.test",
+ *     host="yii2rest.test",
  *     basePath="/rest",
  *     @SWG\Info(
  *         version="1.0.0",

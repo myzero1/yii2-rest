@@ -11,34 +11,6 @@ class UserController extends ApiController
 
     /**
      *
- * @SWG\Definition(
- *      definition="UserDeviceForm",
- *      required={"uuid", "token", "os", "json"},
- *      @SWG\Property(
- *          property="uuid",
- *          type="string",
- *          description="UUID устройства",
- *          example="e3243"
- *      ),
- *      @SWG\Property(
- *          property="token",
- *          type="string",
- *          description="token для Google Fire Base",
- *          example="e3243"
- *      ),
- *      @SWG\Property(
- *          property="os",
- *          type="string",
- *          description="os устройства android|ios",
- *          example="ios"
- *      ),
- *      @SWG\Property(
- *          property="json",
- *          type="string",
- *          description="json достпные параметры устройства, название модели, версия ОС и др",
- *          example=""
- *      )
- * )
      *
      *
      * @SWG\Tag(
@@ -124,7 +96,7 @@ class UserController extends ApiController
      *        description = "数据记录Id",
      *        required = true,
             type = "string",
-     *        @SWG\Schema(ref = "#/definitions/UserDeviceForm")
+     *        @SWG\Schema(ref = "#/definitions/User")
      *     ),
      *
      *     @SWG\Response(
