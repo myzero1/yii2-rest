@@ -12,6 +12,17 @@ class Module extends \yii\base\Module
      */
     // public $controllerNamespace = 'myzero1\rest\controllers';
 
+    public $swaggerConfig = [
+        'schemes' => '{"http"}',
+        'host' => '"yii2rest.test"',
+        'basePath' => '"/rest"',
+        'info' => [
+            'title' => '"接口文档"',
+            'version' => '"1.0.0"',
+            'contact' => 'name = "myzero1", email = "myzero1@sina.com"',
+        ]
+    ];
+
     /**
      * {@inheritdoc}
      */
