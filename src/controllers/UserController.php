@@ -10,13 +10,23 @@ class UserController extends ApiController
 {
 
     /**
-     * GET_LIST GET http://my.api.url/user?sort=['id','ASC']&range=[0, 2]&filter={"status":'10'}
-     *  indexAction
      *
-     * @SWG\Get(path="/user",
-     *     tags={"user"},
+
+     *
+     *
+     * @SWG\Tag(
+     *   name="users",
+     *   description="用户相关操作",
+     *   @SWG\ExternalDocumentation(
+     *     description="Find out more about our store",
+     *     url="http://swagger.io"
+     *   )
+     * )
+     *
+     * @SWG\Get(path="/users",
+     *     tags={"users"},
      *     summary="获取用户列表",
-     *     description="测试直接返回一个array",
+     *     description="获取用户列表：actionIndex GET_LIST GET /users?sort=[""id"",""ASC""]&range=[0, 2]&filter={""status"":""10""}",
      *     produces={"application/json"},
      *
      *     @SWG\Parameter(
@@ -49,6 +59,32 @@ class UserController extends ApiController
      *         description = " success"
      *     )
      * )
+     *
+     *
+     *
+     * @SWG\Get(path="/users/{id}",
+     *     tags={"users"},
+     *     summary="获取用户详情",
+     *     description="获取用户详情：actionView GET_ONE GET /users/1",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Parameter(
+     *        in = "path",
+     *        name = "id",
+     *        description = "数据记录Id",
+     *        required = true,
+     *        type = "integer",
+     *        default = 1,
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     )
+     * )
+     *
+     *
+     *
      *
      */
 
