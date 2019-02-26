@@ -25,7 +25,7 @@ class UserController extends ApiController
      * @SWG\Get(path="/users",
      *     tags={"users"},
      *     summary="记录列表",
-     *     description="获取记录列表：actionIndex GET_LIST GET /users?sort=[""id"",""ASC""]&range=[0, 2]&filter={""status"":""10""}",
+     *     description="获取记录列表：actionIndex GET_LIST GET /users?sort=[""id"",""ASC""]&range=[0, 2]&filter={""status"":""10"",""ids"":[1,3,5]}",
      *     produces={"application/json"},
      *
      *     @SWG\Parameter(
@@ -50,7 +50,7 @@ class UserController extends ApiController
      *        description = "查询条件",
      *        required = false,
      *        type = "string",
-     *        default = "{""status"":""10""}",
+     *        default = "{""status"":""10"",""ids"":[1,3,5]}",
      *     ),
      *
      *     @SWG\Response(
