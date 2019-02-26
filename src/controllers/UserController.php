@@ -24,8 +24,8 @@ class UserController extends ApiController
      *
      * @SWG\Get(path="/users",
      *     tags={"users"},
-     *     summary="获取用户列表",
-     *     description="获取用户列表：actionIndex GET_LIST GET /users?sort=[""id"",""ASC""]&range=[0, 2]&filter={""status"":""10""}",
+     *     summary="记录列表",
+     *     description="获取记录列表：actionIndex GET_LIST GET /users?sort=[""id"",""ASC""]&range=[0, 2]&filter={""status"":""10""}",
      *     produces={"application/json"},
      *
      *     @SWG\Parameter(
@@ -63,8 +63,8 @@ class UserController extends ApiController
      *
      * @SWG\Get(path="/users/{id}",
      *     tags={"users"},
-     *     summary="获取用户详情",
-     *     description="获取用户详情：actionView GET_ONE GET /users/1",
+     *     summary="记录详情",
+     *     description="获取记录详情：actionView GET_ONE GET /users/1",
      *     produces={"application/json"},
      *
      *     @SWG\Parameter(
@@ -86,17 +86,71 @@ class UserController extends ApiController
      *
      * @SWG\Post(path="/users",
      *     tags={"users"},
-     *     summary="获取用户详情",
-     *     description="获取用户详情：actionView GET_ONE GET /users/1",
+     *     summary="记录添加",
+     *     description="添加记录：actionCreate CREATE Post /users",
      *     produces={"application/json"},
      *
      *     @SWG\Parameter(
      *        in = "body",
      *        name = "body",
-     *        description = "数据记录Id",
+     *        description = "记录内容",
      *        required = true,
             type = "string",
      *        @SWG\Schema(ref = "#/definitions/User")
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     )
+     * )
+     *
+     *
+     *
+     * @SWG\Put(path="/users/{id}",
+     *     tags={"users"},
+     *     summary="记录更新",
+     *     description="更新记录：actionUpdate UPDATE PUT /users/1",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Parameter(
+     *        in = "path",
+     *        name = "id",
+     *        description = "数据记录Id",
+     *        required = true,
+     *        type = "integer",
+     *        default = 1,
+     *     ),
+     *     @SWG\Parameter(
+     *        in = "body",
+     *        name = "body",
+     *        description = "更新内容",
+     *        required = true,
+                type = "string",
+     *        @SWG\Schema(ref = "#/definitions/User")
+     *     ),
+     *
+     *     @SWG\Response(
+     *         response = 200,
+     *         description = " success"
+     *     )
+     * )
+     *
+     *
+     *
+     * @SWG\Delete(path="/users/{id}",
+     *     tags={"users"},
+     *     summary="记录删除",
+     *     description="删除记录：actionDelete DELETE DELETE  /users/1",
+     *     produces={"application/json"},
+     *
+     *     @SWG\Parameter(
+     *        in = "path",
+     *        name = "id",
+     *        description = "数据记录Id",
+     *        required = true,
+     *        type = "integer",
+     *        default = 1,
      *     ),
      *
      *     @SWG\Response(
