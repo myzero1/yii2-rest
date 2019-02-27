@@ -117,14 +117,14 @@ class SwaggerApiAction extends Action
         $swaggerConfig = array_column($params, 'swaggerConfig');
         $swaggerConfig = count($swaggerConfig) ? $swaggerConfig[0] : $swaggerConfigDefault;
         
-        $swagger->schemes = $swaggerConfig['schemes'];
-        $swagger->host = $swaggerConfig['host'];
-        $swagger->basePath = $swaggerConfig['basePath'];
-        $swagger->info->title = $swaggerConfig['info']['title'];
-        $swagger->info->version = $swaggerConfig['info']['version'];
-        $swagger->info->description = $swaggerConfig['info']['description'];
-        $swagger->info->contact->name = $swaggerConfig['info']['contact']['name'];
-        $swagger->info->contact->email = $swaggerConfig['info']['contact']['email'];
+        isset($swaggerConfig['schemes']) ? $swagger->schemes = $swaggerConfig['schemes'] : '';
+        isset($swaggerConfig['host']) ? $swagger->host = $swaggerConfig['host'] : '';
+        isset($swaggerConfig['basePath']) ? $swagger->basePath = $swaggerConfig['basePath'] : '';
+        isset($swaggerConfig['info']) && isset($swaggerConfig['info']['title']) ? $swagger->info->title = $swaggerConfig['info']['title'] : '';
+        isset($swaggerConfig['info']) && isset($swaggerConfig['info']['version']) ? $swagger->info->version = $swaggerConfig['info']['version'] : '';
+        isset($swaggerConfig['info']) && isset($swaggerConfig['info']['description']) ? $swagger->info->description = $swaggerConfig['info']['description'] : '';
+        isset($swaggerConfig['info']['contact']) && isset($swaggerConfig['info']) && isset($swaggerConfig['info']['contact']['name']) ? $swagger->info->contact->name = $swaggerConfig['info']['contact']['name'] : '';
+        isset($swaggerConfig['info']['contact']) && isset($swaggerConfig['info']) && isset($swaggerConfig['info']['contact']['email']) ? $swagger->info->contact->email = $swaggerConfig['info']['contact']['email'] : '';
         
         return $swagger;
     }
