@@ -94,6 +94,32 @@ class SwaggerApiAction extends Action
         } else {
             $swagger = $this->getSwagger();
         }
+
+
+        $swaggerConfigDefault = [
+            'schemes' => '{"http"}',
+            'host' => 'yii2rest.test',
+            'basePath' => '/rest',
+            'info' => [
+                'title' => '接口文档',
+                'version' => '1.0.0',
+                'description' => '这是关于: __react-admin__（ https://github.com/marmelab/react-admin/tree/master/packages/ra-data-simple-rest ）的rest api',
+                'contact' => [
+                    'name' => 'myzero1',
+                    'email' => 'myzero1@sina.com',
+                ],
+            ]
+        ];
+        $swaggerConfig = array_column(Yii::$app->modules, 'swaggerConfig');
+        $swaggerConfig = count($swaggerConfig) ? $swaggerConfig[0] : $swaggerConfigDefault;
+        $swagger->schemes = $swaggerConfig['schemes'];
+        $swagger->host = $swaggerConfig['host'];
+        $swagger->basePath = $swaggerConfig['basePath'];
+        $swagger->info->title = $swaggerConfig['info']['title'];
+        $swagger->info->version = $swaggerConfig['info']['version'];
+        $swagger->info->description = $swaggerConfig['info']['description'];
+        $swagger->info->contact->name = $swaggerConfig['info']['contact']['name'];
+        $swagger->info->contact->email = $swaggerConfig['info']['contact']['email'];
         
         return $swagger;
     }

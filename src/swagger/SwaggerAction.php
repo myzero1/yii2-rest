@@ -23,7 +23,7 @@ use yii\web\Response;
  * {
  *     return [
  *         'doc' => [
- *             'class' => 'light\swagger\SwaggerAction',
+ *             'class' => 'myzero1\rest\swagger\SwaggerAction',
  *             'restUrl' => Url::to(['site/api'], true)
  *         ]
  *     ];

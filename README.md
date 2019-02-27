@@ -4,7 +4,21 @@
     'modules' => [
         'rest' => [
             'class' => 'myzero1\rest\Module',
-        ]
+            'swaggerConfig' => [
+                'schemes' => '{"http"}',
+                'host' => '"yii2rest.test"',
+                'basePath' => '"/rest"',
+                'info' => [
+                    'title' => '接口文档1111',
+                    'version' => '1.0.0',
+                    'description' => '这是关于: __react-admin__（ https://github.com/marmelab/react-admin/tree/master/packages/ra-data-simple-rest ）的rest api',
+                    'contact' => [
+                        'name' => 'myzero1',
+                        'email' => 'myzero1@sina.com',
+                    ],
+                ]
+            ],
+        ],
     ],
 
         'request'      => [

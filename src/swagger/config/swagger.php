@@ -11,7 +11,7 @@ namespace myzero1\rest\swagger;
  *         version="1.0.0",
  *         title="接口文档",
  *         description="Version: __1.0.0__",
- *         @SWG\Contact(name = "lichunqiang", email = "licq@lxpgw.com")
+ *         @SWG\Contact(name = "myzero1", email = "myzero1@sina.com")
  *     ),
  * )
  *

@@ -2,34 +2,6 @@
 
 use myzero1\rest\swagger\SwaggerUIAsset;
 
-$swaggerConfigDefault = [
-    'schemes' => '{"http"}',
-    'host' => '"yii2rest.test"',
-    'basePath' => '"/rest"',
-    'info' => [
-        'title' => '接口文档',
-        'version' => '"1.0.0"',
-        'description' => '"这是关于: __react-admin__（https://github.com/marmelab/react-admin/tree/master/packages/ra-data-simple-rest）的rest api"',
-        'contact' => 'name = "myzero1", email = "myzero1@sina.com"',
-    ]
-];
-$swaggerConfig = array_column(Yii::$app->modules, 'swaggerConfig1');
-$swaggerConfig = count($swaggerConfig) ? $swaggerConfig : $swaggerConfigDefault;
-/**
- * @SWG\Swagger(
- *     schemes={"http"},
- *     host="yii2rest.test",
- *     basePath="/rest",
- *     @SWG\Info(
- *         version="1.0.011",
- *         title="$swaggerConfig['info']['title']",
- *         description="Version: __1.0.022__",
- *         @SWG\Contact(name = "lichunqiang", email = "licq@lxpgw.com")
- *     ),
- * )
- *
- */
-
 SwaggerUIAsset::register($this);
 /** @var string $rest_url */
 /** @var array $oauthConfig */
