@@ -1,4 +1,6 @@
 <?php
+namespace myzero1\rest\swaggertools\config;
+
 /**
  * @SWG\SecurityScheme(
  *   securityDefinition="api_key",

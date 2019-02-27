@@ -1,6 +1,5 @@
 <?php
-
-namespace myzero1\rest\swagger;
+namespace myzero1\rest\swaggertools\config;
 
 /**
  * @SWG\Definition(

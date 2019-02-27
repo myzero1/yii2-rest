@@ -1,6 +1,6 @@
 <?php
 
-use myzero1\rest\swagger\SwaggerUIAsset;
+use myzero1\rest\swaggertools\SwaggerUIAsset;
 
 SwaggerUIAsset::register($this);
 /** @var string $rest_url */

@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace myzero1\rest\swagger;
+namespace myzero1\rest\swaggertools;
 
 use Yii;
 use yii\base\Action;
@@ -26,6 +26,7 @@ use yii\web\Response;
  *         'api' => [
  *             'class' => 'myzero1\rest\swagger\SwaggerApiAction',
  *             'scanDir' => [
+ *                 Yii::getAlias('@vendor/myzero1/yii2-rest/src/swaggertools'),
  *                 Yii::getAlias('@vendor/myzero1/yii2-rest/src/swagger'),
  *                 Yii::getAlias('@vendor/myzero1/yii2-rest/src/controllers'),
  *                 Yii::getAlias('@vendor/myzero1/yii2-rest/src/models'),

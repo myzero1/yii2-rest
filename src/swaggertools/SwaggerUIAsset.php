@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace myzero1\rest\swagger;
+namespace myzero1\rest\swaggertools;
 
 use yii\web\AssetBundle;
 use yii\web\View;
