@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of the light/yii2-swagger.
+ * This file is part of the myzero1/yii2-rest.
  *
- * (c) lichunqiang <light-li@hotmail.com>
+ * (c) myzero1 <myzero1@sina.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -24,10 +24,11 @@ use yii\web\Response;
  * {
  *     return [
  *         'api' => [
- *             'class' => 'light\swagger\SwaggerApiAction',
+ *             'class' => 'myzero1\rest\swagger\SwaggerApiAction',
  *             'scanDir' => [
- *                 Yii::getAlias('@api/modules/v1/swagger'),
- *                 Yii::getAlias('@api/modules/v1/controllers'),
+ *                 Yii::getAlias('@vendor/myzero1/yii2-rest/src/swagger'),
+ *                 Yii::getAlias('@vendor/myzero1/yii2-rest/src/controllers'),
+ *                 Yii::getAlias('@vendor/myzero1/yii2-rest/src/models'),
  *                 ...
  *             ]
  *         ]
