@@ -112,8 +112,11 @@ class SwaggerApiAction extends Action
                 ],
             ]
         ];
-        $swaggerConfig = array_column(Yii::$app->modules, 'swaggerConfig');
+
+        $params = array_filter(array_column(Yii::$app->modules, 'params'));
+        $swaggerConfig = array_column($params, 'swaggerConfig');
         $swaggerConfig = count($swaggerConfig) ? $swaggerConfig[0] : $swaggerConfigDefault;
+        
         $swagger->schemes = $swaggerConfig['schemes'];
         $swagger->host = $swaggerConfig['host'];
         $swagger->basePath = $swaggerConfig['basePath'];
