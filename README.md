@@ -6,7 +6,11 @@ Rest api with wagger in yii2.
 Show time
 ------------
 
-![](https://github.com/myzero1/show-time/blob/master/yii2-gridview-export/screenshot/1.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot1/101.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot1/102.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot1/103.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot1/104.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot1/105.png)
 
 Installation
 ------------
