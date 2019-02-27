@@ -1,0 +1,87 @@
+<?php
+
+/**
+    @SWG\Tag(
+        name="users",
+        description="users",
+        @SWG\ExternalDocumentation(
+            description="Find out more about our store",
+            url="http://swagger.io"
+        )
+    )
+ */
+
+/**
+    @SWG\Definition(
+        definition="User",
+        required={"username","auth_key","password_hash","email","created_at","updated_at"},
+
+        @SWG\Property(
+            property="username",
+            type="string",
+            description="username",
+            example="username"
+        ),
+        @SWG\Property(
+            property="auth_key",
+            type="string",
+            description="auth_key",
+            example="auth_key"
+        ),
+        @SWG\Property(
+            property="password_hash",
+            type="string",
+            description="password_hash",
+            example="password_hash"
+        ),
+        @SWG\Property(
+            property="password_reset_token",
+            type="string",
+            description="password_reset_token",
+            example="password_reset_token"
+        ),
+        @SWG\Property(
+            property="email",
+            type="string",
+            description="email",
+            example="email"
+        ),
+        @SWG\Property(
+            property="status",
+            type="integer",
+            description="status",
+            example="1551258555"
+        ),
+        @SWG\Property(
+            property="created_at",
+            type="integer",
+            description="created_at",
+            example="1551258555"
+        ),
+        @SWG\Property(
+            property="updated_at",
+            type="integer",
+            description="updated_at",
+            example="1551258555"
+        ),
+        @SWG\Property(
+            property="api_token",
+            type="string",
+            description="api_token",
+            example="api_token"
+        ),
+        @SWG\Property(
+            property="allowance",
+            type="integer",
+            description="allowance",
+            example="1551258555"
+        ),
+        @SWG\Property(
+            property="allowance_updated_at",
+            type="integer",
+            description="allowance_updated_at",
+            example="1551258555"
+        ),
+    
+    )
+ */
