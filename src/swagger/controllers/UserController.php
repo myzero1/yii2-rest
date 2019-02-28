@@ -12,7 +12,7 @@
             description = "Authorization",
             required = true,
             type = "string",
-            default = "Bearer fNMJZf-4_q5r-Qejx8ZSjGGPbAHjy0Hx_1551322046",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
          ),
          @SWG\Parameter(
             in = "query",
@@ -59,7 +59,7 @@
             description = "Authorization",
             required = true,
             type = "string",
-            default = "Bearer fNMJZf-4_q5r-Qejx8ZSjGGPbAHjy0Hx_1551322046",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
          ),
          @SWG\Parameter(
             in = "path",
@@ -90,7 +90,7 @@
             description = "Authorization",
             required = true,
             type = "string",
-            default = "Bearer fNMJZf-4_q5r-Qejx8ZSjGGPbAHjy0Hx_1551322046",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
          ),
          @SWG\Parameter(
             in = "body",
@@ -121,7 +121,7 @@
             description = "Authorization",
             required = true,
             type = "string",
-            default = "Bearer fNMJZf-4_q5r-Qejx8ZSjGGPbAHjy0Hx_1551322046",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
          ),
          @SWG\Parameter(
             in = "path",
@@ -160,7 +160,7 @@
             description = "Authorization",
             required = true,
             type = "string",
-            default = "Bearer fNMJZf-4_q5r-Qejx8ZSjGGPbAHjy0Hx_1551322046",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
          ),
          @SWG\Parameter(
             in = "path",

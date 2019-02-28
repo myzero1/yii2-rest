@@ -49,10 +49,10 @@ class ApiController extends ActiveController
             X-Rate-Limit-Reset: 为了得到最大请求数所等待的秒数。
             你可以禁用这些头信息通过配置 yii\filters\RateLimiter::enableRateLimitHeaders 为false, 就像在上面的代码示例所示。
         */
-        // $behaviors['rateLimiter'] = [
-        //     'class' => RateLimiter::className(),
-        //     'enableRateLimitHeaders' => true,
-        // ];
+        $behaviors['rateLimiter'] = [
+            'class' => RateLimiter::className(),
+            'enableRateLimitHeaders' => true,
+        ];
 
         return $behaviors;
     }
