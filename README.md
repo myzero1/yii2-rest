@@ -42,11 +42,47 @@ Once the extension is installed, simply modify your application configuration(ma
 return [
     ......
     'components' => [
-        'request'      => [
+        'request' => [
+            'class' => '\yii\web\Request',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
-                'text/json'        => 'yii\web\JsonParser',
-            ],
+                'text/json' => 'yii\web\JsonParser',
+            ]
+        ],
+        'response' => [
+            'class' => 'yii\web\Response',
+            'format' => yii\web\Response::FORMAT_JSON,
+            'charset' => 'UTF-8',
+            'on beforeSend' => function ($event) {
+                    //restful api
+                    $response = $event->sender;
+
+                    if (isset($response->data['code'])) {
+                        $code = $response->data['code'];
+                    } else {
+                        $code = $response->getStatusCode();
+                    }
+
+                    if (isset($response->data['msg']) && $response->data['msg']) {
+                        $msg = $response->data['msg'];
+                    } else {
+                        $msg = $response->statusText;
+                    }
+
+                    if (isset($response->data['data'])) {
+                        $dataOld = $response->data['data'];
+                    } else {
+                        $dataOld = $response->data;
+                    }
+
+                    //设置固定返回数据参数
+                    $data = [
+                        'code' => $code,
+                        'msg' => $msg,
+                        'data' => $dataOld,
+                    ];
+                    $response->data = $data;
+            },
         ],
         ......
         'urlManager' => [

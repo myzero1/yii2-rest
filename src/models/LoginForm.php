@@ -2,7 +2,7 @@
 namespace myzero1\rest\models;
 use Yii;
 use yii\base\Model;
-use myzero1\rest\models\User;
+use myzero1\rest\models\Auth as User;
 /**
  * Login form
  */
