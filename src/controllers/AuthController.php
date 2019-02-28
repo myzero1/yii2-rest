@@ -3,7 +3,6 @@
 namespace myzero1\rest\controllers;
 
 use Yii;
-use myzero1\rest\models\User;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
@@ -12,6 +11,7 @@ use myzero1\rest\components\ApiController;
 
 use yii\filters\AccessControl;
 use myzero1\rest\models\LoginForm;
+use myzero1\rest\models\User;
 
 /**
  * AuthController implements the CRUD actions for User model.
@@ -57,7 +57,14 @@ class AuthController extends ApiController
      */
     public function actionJoin()
     {
-        var_dump('actionJoin');exit;
+        $model = new User();
+        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->save()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+        } elseif (!$model->hasErrors()) {
+            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+        }
+        return $model;
     }
 
     /**
@@ -70,11 +77,12 @@ class AuthController extends ApiController
         $model = new LoginForm;
         $model->setAttributes(Yii::$app->request->post());
         if ($user = $model->login()) {
-            return [
-                'code' => 200200,
-                'msg' => 'success',
-                'data' => $user->api_token,
-            ];
+            // return [
+            //     'code' => 200200,
+            //     'msg' => 'success',
+            //     'data' => $user->api_token,
+            // ];
+            return $user->api_token;
         } else {
             $errors = [];
             foreach ($model->errors as $key => $value) {
@@ -82,11 +90,12 @@ class AuthController extends ApiController
             }
             $errorMsg = implode(';', $errors);
             
-            return [
-                'code' => 200500,
-                'msg' => $errorMsg,
-                'data' => '',
-            ];
+            // return [
+            //     'code' => 200500,
+            //     'msg' => $errorMsg,
+            //     'data' => '',
+            // ];
+            return $errorMsg;
         }
     }
 
