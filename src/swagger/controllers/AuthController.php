@@ -11,10 +11,30 @@
  */
 
 /**
+    @SWG\Definition(
+        definition="Auth",
+        required={"username","password"},
+
+        @SWG\Property(
+            property="username",
+            type="string",
+            description="username",
+            example="admin"
+        ),
+        @SWG\Property(
+            property="password",
+            type="string",
+            description="password",
+            example="123456"
+        ),
+    )
+ */
+
+/**
      @SWG\Post(path="/auth/join",
          tags={"auth"},
-         summary="record create",
-         description="Record create: actionCreate CREATE Post /users",
+         summary="auth join",
+         description="Auth join: Post /auth/join",
          produces={"application/json"},
      
          @SWG\Parameter(
@@ -34,25 +54,17 @@
 
      @SWG\Post(path="/auth/login",
          tags={"auth"},
-         summary="record create",
-         description="Record create: actionCreate CREATE Post /users",
+         summary="auth login",
+         description="Auth login: Post /auth/loin",
          produces={"application/json"},
      
          @SWG\Parameter(
-            in = "query",
-            name = "username",
-            description = "username",
+            in = "body",
+            name = "body",
+            description = "record content",
             required = true,
             type = "string",
-            default = "test",
-         ),
-         @SWG\Parameter(
-            in = "query",
-            name = "password",
-            description = "password",
-            required = true,
-            type = "string",
-            default = "123456",
+            @SWG\Schema(ref = "#/definitions/Auth")
          ),
      
          @SWG\Response(
@@ -64,7 +76,7 @@
      @SWG\Get(path="/auth/info",
          tags={"auth"},
          summary="auth info",
-         description="Auth info",
+         description="Auth info: Get /auth/info",
          produces={"application/json"},
      
          @SWG\Response(
