@@ -1,5 +1,5 @@
 <?php
-namespace myzero1\rest\gii;
+namespace myzero1\rest\gii\object;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -49,7 +49,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getName()
     {
-        return 'REST Generator';
+        return "Obj's rest generator with wagger";
     }
 
     /**
@@ -58,7 +58,7 @@ class Generator extends \yii\gii\Generator
     public function getDescription()
     {
         return 'This generator generates a resetful controller that implement CRUD (Create, Read, Update, Delete)
-            operations for the specified data model.';
+            operations for the specified data model.For logic object.';
     }
 
     /**
