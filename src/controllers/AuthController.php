@@ -18,38 +18,6 @@ use myzero1\rest\models\User;
  */
 class AuthController extends ApiController 
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['join', 'login'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['info'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'join' => ['post'],
-                    'login' => ['post'],
-                    'info' => ['get'],
-                ],
-            ],
-        ];
-    }
-
     /**
      * Join action.
      *

@@ -19,7 +19,7 @@
             property="username",
             type="string",
             description="username",
-            example="admin"
+            example="test"
         ),
         @SWG\Property(
             property="password",
@@ -78,6 +78,15 @@
          summary="auth info",
          description="Auth info: Get /auth/info",
          produces={"application/json"},
+
+         @SWG\Parameter(
+            in = "header",
+            name = "Authorization",
+            description = "Authorization",
+            required = true,
+            type = "string",
+            default = "Bearer fNMJZf-4_q5r-Qejx8ZSjGGPbAHjy0Hx_1551322046",
+         ),
      
          @SWG\Response(
              response = 200,
