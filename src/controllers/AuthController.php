@@ -74,13 +74,13 @@ class AuthController extends ApiController
      */
     public function actionInfo()
     {
-        // $user = $this->authenticate(Yii::$app->user, Yii::$app->request, Yii::$app->response);
+        $user = $this->authenticate(Yii::$app->user, Yii::$app->request, Yii::$app->response);
 
         // return [
         //     'code' => 200500,
         //     'msg' => '',
         //     'data' => $user,
         // ];
-        var_dump('expression');exit;
+        return $user;
     }
 }
