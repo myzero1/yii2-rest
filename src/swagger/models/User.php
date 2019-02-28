@@ -3,7 +3,7 @@
 /**
     @SWG\Tag(
         name="users",
-        description="users",
+        description="users description",
         @SWG\ExternalDocumentation(
             description="Find out more about our store",
             url="http://swagger.io"
