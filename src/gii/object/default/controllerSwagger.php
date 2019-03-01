@@ -6,7 +6,8 @@
 use yii\helpers\StringHelper;
 
 $controllerClass = StringHelper::basename($generator->controllerClass);
-$controllerName = str_replace('controller', '', strtolower($controllerClass)) . 's';
+// $controllerName = str_replace('controller', '', strtolower($controllerClass)) . 's';
+$controllerName = str_replace('controller', '', strtolower($controllerClass));
 
 $properties = $generator->generateProperties($generator->tableName);
 $rules = $generator->generateRules($generator->tableName);
