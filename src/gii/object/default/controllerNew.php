@@ -47,4 +47,23 @@ use myzero1\rest\components\ApiController;
 class <?= $controllerClass ?> extends ApiController <?= "\n" ?>
 {
     public $modelClass = '<?= ltrim($generator->modelClass, '\\') ?>';
+
+	/** 
+	 * {@inheritdoc} 
+	 */  
+	public function actions()  
+	{  
+		$actions = parent::actions();
+	    $actions['index'] = [  
+	            'class' => 'yii\rest\IndexAction',
+	            'modelClass' => '<?= ltrim($generator->modelClass, '\\') ?>',
+	            'prepareDataProvider' => function(){
+	            	$searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
+			        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+			        return $dataProvider;
+	            },
+	        ];
+
+	    return $actions;
+	}
 }

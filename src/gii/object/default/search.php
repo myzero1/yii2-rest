@@ -122,7 +122,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
             'query' => $query,<?= (in_array('id', $searchAttributes)) ? "\n            'sort' => ['defaultOrder' => ['id' => SORT_DESC]]\n" : '' ?>
         ]);
 
-        $this->load($params);
+        $this->load( self::adjustParams($params) );
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -145,7 +145,7 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
      */
     public function sqlSearch($params)
     {
-        $this->load($params);
+        $this->load( self::adjustParams($params) );
 
         <?= '$where '."=[\n           " . implode("\n           ", $generateSqlSearchConditions) . "\n        ];\n" ?>
 
@@ -193,5 +193,29 @@ class <?= $searchModelClass ?> extends <?= isset($modelAlias) ? $modelAlias : $m
         ]);
 
         return $sqlDataProvider;
+    }
+
+    /**
+     * Adjust params
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public static function adjustParams($params)
+    {
+        $paramsFixed = [];
+        $searchModelNameInfo = explode('\\', __CLASS__);
+        $searchModelName = $searchModelNameInfo[count($searchModelNameInfo)-1];
+
+        if (isset($params[$searchModelName])) {
+            $paramsFixed = $params;
+        } else {
+            foreach ($params as $k => $v) {
+                $paramsFixed[$searchModelName][$k] = $v;
+            }
+        }
+
+        return $paramsFixed;
     }
 }
