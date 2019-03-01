@@ -37,6 +37,14 @@ echo "<?php\n";
          produces={"application/json"},
      
          @SWG\Parameter(
+            in = "header",
+            name = "Authorization",
+            description = "Authorization",
+            required = true,
+            type = "string",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
+         ),
+         @SWG\Parameter(
             in = "query",
             name = "sort",
             description = "sort",
@@ -76,6 +84,14 @@ echo "<?php\n";
          produces={"application/json"},
      
          @SWG\Parameter(
+            in = "header",
+            name = "Authorization",
+            description = "Authorization",
+            required = true,
+            type = "string",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
+         ),
+         @SWG\Parameter(
             in = "path",
             name = "id",
             description = "record id",
@@ -97,7 +113,15 @@ echo "<?php\n";
          summary="record create",
          description="Record create: actionCreate CREATE Post /<?= $controllerName ?>",
          produces={"application/json"},
-     
+
+         @SWG\Parameter(
+            in = "header",
+            name = "Authorization",
+            description = "Authorization",
+            required = true,
+            type = "string",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
+         ),
          @SWG\Parameter(
             in = "body",
             name = "body",
@@ -121,6 +145,14 @@ echo "<?php\n";
          description="Record update: actionUpdate UPDATE PUT /<?= $controllerName ?>/1",
          produces={"application/json"},
      
+         @SWG\Parameter(
+            in = "header",
+            name = "Authorization",
+            description = "Authorization",
+            required = true,
+            type = "string",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
+         ),
          @SWG\Parameter(
             in = "path",
             name = "id",
@@ -151,7 +183,15 @@ echo "<?php\n";
          summary="record delete",
          description="Record delete: actionDelete DELETE DELETE  /<?= $controllerName ?>/1",
          produces={"application/json"},
-     
+
+         @SWG\Parameter(
+            in = "header",
+            name = "Authorization",
+            description = "Authorization",
+            required = true,
+            type = "string",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
+         ),
          @SWG\Parameter(
             in = "path",
             name = "id",

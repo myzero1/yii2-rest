@@ -44,7 +44,7 @@ use myzero1\rest\components\ApiController;
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
-class <?= $controllerClass ?> extends ApiController <?= "\n" ?>
+class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
     public $modelClass = '<?= ltrim($generator->modelClass, '\\') ?>';
 
