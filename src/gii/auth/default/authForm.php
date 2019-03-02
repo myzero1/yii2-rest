@@ -3,185 +3,100 @@
  * This is the template for generating CRUD search class of the specified model.
  */
 
+use yii\helpers\StringHelper;
+
+$ns = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\'))) . '\\models\\form';
+
 echo "<?php\n";
 ?>
 
-namespace myzero1\rest\models;
+namespace <?= $ns?>;
+
 use Yii;
-use yii\db\ActiveRecord;
-use yii\behaviors\TimestampBehavior;
-use yii\web\IdentityInterface;
-use yii\filters\RateLimitInterface;
-
-class Auth extends ActiveRecord implements IdentityInterface, RateLimitInterface
+use yii\base\Model;
+use <?= $ns?>\Auth as User;
+/**
+ * Login form
+ */
+class LoginForm extends Model
 {
-    public $authKey;
-    public $accessToken;
-
-    public function behaviors()
+    public $username;
+    public $password;
+    private $_user;
+    const GET_API_TOKEN = 'generate_api_token';
+    public function init ()
     {
-        return [
-            [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',
-                'updatedAtAttribute' => 'updated_at',
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-                ]
-            ]
-        ];
+        parent::init();
+        $this->on(self::GET_API_TOKEN, [$this, 'onGenerateApiToken']);
     }
-
-    # 速度控制  2秒内访问3次，注意，数组的第一个不要设置1，设置1会出问题，一定要
-    #大于2，譬如下面  2秒内只能访问三次
-    # 文档标注：返回允许的请求的最大数目及时间，例如，[100, 600] 表示在600秒内最多100次的API调用。
-    public  function getRateLimit($request, $action){
-        return Yii::$app->params['rateLimit'];
-    }
-
-    # 文档标注： 返回剩余的允许的请求和相应的UNIX时间戳数 当最后一次速率限制检查时。
-    public  function loadAllowance($request, $action){
-        //return [1,strtotime(date("Y-m-d H:i:s"))];
-        //echo $this->allowance;exit;
-        return [$this->allowance, $this->allowance_updated_at];
-    }
-
-    # allowance 对应user 表的allowance字段  int类型
-    # allowance_updated_at 对应user allowance_updated_at  int类型
-    # 文档标注：保存允许剩余的请求数和当前的UNIX时间戳。
-    public  function saveAllowance($request, $action, $allowance, $timestamp){
-        $this->allowance = $allowance;
-        $this->allowance_updated_at = $timestamp;
-        $this->save();
-    }
-
-    //表名
-    public static function tableName()
-    {
-        return "{{%user}}";
-    }
-
-    //规则
+    /**
+     * @inheritdoc
+     * 对客户端表单数据进行验证的rule
+     */
     public function rules()
     {
         return [
-            ['username', 'required', 'message' => '用户名不能为空'],
-            ['api_token', 'required', 'message' => 'api_token不能为空']
+            [['username', 'password'], 'required'],
+            ['password', 'validatePassword'],
         ];
     }
-
     /**
-     * 生成 "remember me" 认证key
+     * 自定义的密码认证方法
      */
-    public function generateAuthKey()
+    public function validatePassword($attribute, $params)
     {
-        $this->auth_key = Yii::$app->security->generateRandomString();
-    }
-
-    /**
-     * 生成 api_token
-     */
-    public function generateApiToken()
-    {
-        $this->api_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
-
-    /**
-     * 校验api_token是否有效
-     */
-    public static function apiTokenIsValid($token)
-    {
-        if (empty($token)) {
-            return false;
+        if (!$this->hasErrors()) {
+            $this->_user = $this->getUser();
+            if (!$this->_user || !$this->_user->validatePassword($this->password, $this->_user->password_hash)) {
+                $this->addError($attribute, '用户名或密码错误.');
+            }
         }
-        $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.apiTokenExpire'];
-        return $timestamp + $expire >= time();
     }
-
-    /**
-     * 根据api token 获取用户
-     * @param $token
-     * @return array|null|ActiveRecord
-     */
-    public static function findByApiToken($token)
-    {
-        return static::find()->where('api_token = :api_token', [':api_token' => $token])->one();
-    }
-
-    /**
-     * 根据用户名查询用户
-     * @param $username
-     * @return array|null|ActiveRecord
-     */
-    public static function findByUsername($username)
-    {
-        return static::find()->where('username = :username', [':username' => $username])->one();
-    }
-
     /**
      * @inheritdoc
      */
-    public static function findIdentity($id)
+    public function attributeLabels()
     {
-        return static::findOne(['id' => $id]);
+        return [
+            'username' => '用户名',
+            'password' => '密码',
+        ];
     }
-
     /**
-     * @inheritdoc
+     * Logs in a user using the provided username and password.
+     *
+     * @return boolean whether the user is logged in successfully
      */
-    public static function findIdentityByAccessToken($token, $type = null)
+    public function login()
     {
-        // 如果token无效的话
-        if(!static::apiTokenIsValid($token)) {
-            throw new \yii\web\UnauthorizedHttpException("token is invalid.");
+        if ($this->validate()) {
+            $this->trigger(self::GET_API_TOKEN);
+            return $this->_user;
+        } else {
+            return null;
         }
-        return static::findOne(['api_token' => $token]);
     }
-
     /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * 为model的password_hash字段生成密码的hash值
+     * 根据用户名获取用户的认证信息
      *
-     * @param string $password
+     * @return User|null
      */
-    public function setPassword($password)
+    protected function getUser()
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        if ($this->_user === null) {
+            $this->_user = User::findByUsername($this->username);
+        }
+        return $this->_user;
     }
-
     /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
+     * 登录校验成功后，为用户生成新的token
+     * 如果token失效，则重新生成token
      */
-    public function validatePassword($password, $password_hash)
+    public function onGenerateApiToken ()
     {
-        return Yii::$app->security->validatePassword($password, $password_hash);
+        if (!User::apiTokenIsValid($this->_user->api_token)) {
+            $this->_user->generateApiToken();
+            $this->_user->save(false);
+        }
     }
 }

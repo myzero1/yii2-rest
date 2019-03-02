@@ -10,7 +10,8 @@ $ns = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\'))) .
 echo "<?php\n";
 ?>
 
-namespace <?= $ns?>
+namespace <?= $ns?>;
+
 use Yii;
 use yii\db\ActiveRecord;
 use yii\behaviors\TimestampBehavior;

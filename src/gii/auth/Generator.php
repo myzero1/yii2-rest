@@ -159,15 +159,15 @@ class Generator extends \yii\gii\Generator
      */
     public function generate()
     {
-        $prefix = StringHelper::dirname(dirname(ltrim($this->controllerClass, '\\')));
+        $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')));
+        $prefix = explode('controllers', $controllerFile);
+        $prefix = $prefix[0];
 
         $authModelFile = sprintf('%s%s', $prefix, 'models/Auth.php');
-        $formModelFile = sprintf('%s%s', $prefix, 'models/LoginForm.php');
+        $formModelFile = sprintf('%s%s', $prefix, 'models/form/LoginForm.php');
         $authControllerFile = sprintf('%s%s', $prefix, 'controllers/AuthControllers.php');
         $authControllerSwaggerFile = sprintf('%s%s', $prefix, '/swagger/controllers/AuthControllers.php');
-// var_dump($authModelFile);
-// var_dump($formModelFile);
-// exit;
+
         $files = [
             new CodeFile($authModelFile, $this->render('authModel.php')),
             new CodeFile($formModelFile, $this->render('authForm.php')),
