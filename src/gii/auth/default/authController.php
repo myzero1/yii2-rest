@@ -42,6 +42,45 @@ class AuthController extends ActiveController
     public $modelClass = '';
 
     /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'join'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['info'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'login' => ['post'],
+                    'join' => ['post'],
+                    'info' => ['get'],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function actions()
+    {
+        return [];
+    }
+
+    /**
      * Join action.
      *
      * @return string
@@ -80,7 +119,7 @@ class AuthController extends ActiveController
                 $errors[] = implode(';', $value);
             }
             $errorMsg = implode(';', $errors);
-            
+
             // return [
             //     'code' => 200500,
             //     'msg' => $errorMsg,
