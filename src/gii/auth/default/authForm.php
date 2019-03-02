@@ -5,16 +5,16 @@
 
 use yii\helpers\StringHelper;
 
-$ns = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\'))) . '\\models\\form';
+$nsp = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\'))) . '\\models';
 
 echo "<?php\n";
 ?>
 
-namespace <?= $ns?>;
+namespace <?= $nsp . '\form'?>;
 
 use Yii;
 use yii\base\Model;
-use <?= $ns?>\Auth as User;
+use <?= $nsp?>\Auth as User;
 /**
  * Login form
  */

@@ -39,6 +39,8 @@ use <?= sprintf('%s\%s', $prefix, 'models\Auth as User') ?>;
  */
 class AuthController extends ActiveController 
 {
+    public $modelClass = '';
+
     /**
      * Join action.
      *
