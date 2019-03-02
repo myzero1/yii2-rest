@@ -31,13 +31,14 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
+use <?= sprintf('%s\%s', $prefix, 'components\BasicController') ?>;
 use <?= sprintf('%s\%s', $prefix, 'models\form\LoginForm') ?>;
 use <?= sprintf('%s\models\%s as User', $prefix, ucfirst($generator->tableName)) ?>;
 
 /**
  * AuthController implements the CRUD actions for User model.
  */
-class AuthController extends ActiveController 
+class AuthController extends BasicController
 {
     public $modelClass = '';
 

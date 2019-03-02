@@ -24,6 +24,8 @@ $urlParams = $generator->generateUrlParams();
 $actionParams = $generator->generateActionParams();
 $actionParamComments = $generator->generateActionParamComments();
 
+$prefix = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+
 echo "<?php\n";
 ?>
 
@@ -40,20 +42,22 @@ use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use <?= sprintf('%s\%s', $prefix, 'components\BasicController') ?>;
+
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
-class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
+class <?= $controllerClass ?> extends BasicController<?= "\n" ?>
 {
     public $modelClass = '<?= ltrim($generator->modelClass, '\\') ?>';
 
-	/** 
-	 * {@inheritdoc} 
-	 */  
-	public function actions()  
-	{  
+	/**
+	 * {@inheritdoc}
+	 */
+	public function actions()
+	{
 		$actions = parent::actions();
-	    $actions['index'] = [  
+	    $actions['index'] = [
 	            'class' => 'yii\rest\IndexAction',
 	            'modelClass' => '<?= ltrim($generator->modelClass, '\\') ?>',
 	            'prepareDataProvider' => function(){

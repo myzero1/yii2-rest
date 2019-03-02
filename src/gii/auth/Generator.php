@@ -185,12 +185,14 @@ class Generator extends \yii\gii\Generator
         $formModelFile = sprintf('%s%s', $prefix, 'models/form/LoginForm.php');
         $authControllerFile = sprintf('%s%s', $prefix, 'controllers/AuthController.php');
         $authControllerSwaggerFile = sprintf('%s%s', $prefix, 'swagger/controllers/AuthController.php');
+        $basicControllerFile = sprintf('%s%s', $prefix, 'components/BasicController.php');
 
         $files = [
             new CodeFile($authModelFile, $this->render('authModel.php')),
             new CodeFile($formModelFile, $this->render('authForm.php')),
             new CodeFile($authControllerFile, $this->render('authController.php')),
             new CodeFile($authControllerSwaggerFile, $this->render('authControllerSwaager.php')),
+            new CodeFile($basicControllerFile, $this->render('basicController.php')),
         ];
 
         if (!empty($this->searchModelClass)) {
