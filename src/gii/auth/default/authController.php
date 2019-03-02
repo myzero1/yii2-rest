@@ -17,44 +17,91 @@ if ($modelClass === $searchModelClass) {
     $searchModelAlias = $searchModelClass . 'Search';
 }
 
+$prefix = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+
 echo "<?php\n";
 ?>
 
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
 use Yii;
-<?php if (!empty($generator->searchModelClass)): ?>
-use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
-<?php else: ?>
 use yii\data\ActiveDataProvider;
-<?php endif; ?>
-use <?= ltrim($generator->baseControllerClass, '\\') ?>;
+use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+
+use <?= sprintf('%s\%s', $prefix, 'models\form\LoginForm') ?>;
+use <?= sprintf('%s\%s', $prefix, 'models\Auth as User') ?>;
 
 /**
- * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
+ * AuthController implements the CRUD actions for User model.
  */
-class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
+class AuthController extends ActiveController 
 {
-    public $modelClass = '<?= ltrim($generator->modelClass, '\\') ?>';
+    /**
+     * Join action.
+     *
+     * @return string
+     */
+    public function actionJoin()
+    {
+        $model = new User();
+        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->save()) {
+            $response = Yii::$app->getResponse();
+            $response->setStatusCode(201);
+        } elseif (!$model->hasErrors()) {
+            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+        }
+        return $model;
+    }
 
-    /** 
-     * {@inheritdoc} 
-     */  
-    public function actions()  
-    {  
-        $actions = parent::actions();
-        $actions['index'] = [  
-                'class' => 'yii\rest\IndexAction',
-                'modelClass' => '<?= ltrim($generator->modelClass, '\\') ?>',
-                'prepareDataProvider' => function(){
-                    $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
-                    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                    return $dataProvider;
-                },
-            ];
+    /**
+     * Login action.
+     *
+     * @return string
+     */
+    public function actionLogin ()
+    {
+        $model = new LoginForm;
+        $model->setAttributes(Yii::$app->request->post());
+        if ($user = $model->login()) {
+            // return [
+            //     'code' => 200200,
+            //     'msg' => 'success',
+            //     'data' => $user->api_token,
+            // ];
+            return $user->api_token;
+        } else {
+            $errors = [];
+            foreach ($model->errors as $key => $value) {
+                $errors[] = implode(';', $value);
+            }
+            $errorMsg = implode(';', $errors);
+            
+            // return [
+            //     'code' => 200500,
+            //     'msg' => $errorMsg,
+            //     'data' => '',
+            // ];
+            return $errorMsg;
+        }
+    }
 
-        return $actions;
+    /**
+     * Info action.
+     *
+     * @return string
+     */
+    public function actionInfo()
+    {
+        $user = $this->authenticate(Yii::$app->user, Yii::$app->request, Yii::$app->response);
+
+        // return [
+        //     'code' => 200500,
+        //     'msg' => '',
+        //     'data' => $user,
+        // ];
+        return $user;
     }
 }
