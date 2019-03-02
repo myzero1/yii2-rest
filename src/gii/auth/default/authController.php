@@ -17,15 +17,12 @@ if ($modelClass === $searchModelClass) {
     $searchModelAlias = $searchModelClass . 'Search';
 }
 
-/* @var $class ActiveRecordInterface */
-
 echo "<?php\n";
 ?>
 
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
 use Yii;
-use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
 use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
 <?php else: ?>
@@ -34,12 +31,30 @@ use yii\data\ActiveDataProvider;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use myzero1\rest\components\ApiController;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
-class <?= $controllerClass ?> extends ApiController <?= "\n" ?>
+class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
     public $modelClass = '<?= ltrim($generator->modelClass, '\\') ?>';
+
+    /** 
+     * {@inheritdoc} 
+     */  
+    public function actions()  
+    {  
+        $actions = parent::actions();
+        $actions['index'] = [  
+                'class' => 'yii\rest\IndexAction',
+                'modelClass' => '<?= ltrim($generator->modelClass, '\\') ?>',
+                'prepareDataProvider' => function(){
+                    $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
+                    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                    return $dataProvider;
+                },
+            ];
+
+        return $actions;
+    }
 }

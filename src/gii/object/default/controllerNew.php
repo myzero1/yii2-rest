@@ -39,7 +39,6 @@ use yii\data\ActiveDataProvider;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use myzero1\rest\components\ApiController;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
