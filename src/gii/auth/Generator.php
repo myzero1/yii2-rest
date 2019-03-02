@@ -214,7 +214,7 @@ class Generator extends \yii\gii\Generator
         $modelGenerator->templates['default'] = $defaultTemplate;
 
         $modelFiles =  $modelGenerator->generate();
-        return array_merge($files, $modelFiles);
+        return array_merge($modelFiles, $files);
     }
 
     /**
