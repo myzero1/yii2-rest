@@ -32,7 +32,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 use <?= sprintf('%s\%s', $prefix, 'models\form\LoginForm') ?>;
-use <?= sprintf('%s\%s', $prefix, 'models\Auth as User') ?>;
+use <?= sprintf('%s\models\%s as User', $prefix, ucfirst($generator->tableName)) ?>;
 
 /**
  * AuthController implements the CRUD actions for User model.
