@@ -9,6 +9,7 @@ use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
+use yii\helpers\StringHelper;
 
 /**
  * Generates CRUD
@@ -67,21 +68,17 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['controllerClass', 'modelClass', 'searchModelClass', 'baseControllerClass'], 'filter', 'filter' => 'trim'],
-            [['modelClass', 'controllerClass', 'baseControllerClass', 'indexWidgetType', 'tableName'], 'required'],
-            [['searchModelClass'], 'compare', 'compareAttribute' => 'modelClass', 'operator' => '!==', 'message' => 'Search Model Class must not be equal to Model Class.'],
-            [['modelClass', 'controllerClass', 'baseControllerClass', 'searchModelClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
-            [['modelClass'], 'validateClass', 'params' => ['extends' => BaseActiveRecord::className()]],
+            [['controllerClass', 'baseControllerClass'], 'filter', 'filter' => 'trim'],
+            [['controllerClass', 'baseControllerClass', 'indexWidgetType'], 'required'],
+            [['controllerClass', 'baseControllerClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
             [['baseControllerClass'], 'validateClass', 'params' => ['extends' => Controller::className()]],
             [['controllerClass'], 'match', 'pattern' => '/Controller$/', 'message' => 'Controller class name must be suffixed with "Controller".'],
             [['controllerClass'], 'match', 'pattern' => '/(^|\\\\)[A-Z][^\\\\]+Controller$/', 'message' => 'Controller class name must start with an uppercase letter.'],
-            [['controllerClass', 'searchModelClass'], 'validateNewClass'],
+            [['controllerClass'], 'validateNewClass'],
             [['indexWidgetType'], 'in', 'range' => ['grid', 'list']],
-            [['modelClass'], 'validateModelClass'],
             [['enableI18N', 'enablePjax'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
             ['viewPath', 'safe'],
-            [['tableName'], 'validateTableName'],
         ]);
     }
 
@@ -162,16 +159,22 @@ class Generator extends \yii\gii\Generator
      */
     public function generate()
     {
-        $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')) . '.php');
-        $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')) . '.php');
-        $controllerSwaggerFile = str_replace('controllers', 'swagger/controllers', $controllerFile);
-        $modelSwaggerFile = str_replace('controllers', 'swagger/models', $controllerFile);
-        $modelSwaggerFile = str_replace('Controller', '', $modelSwaggerFile);
+        $prefix = StringHelper::dirname(dirname(ltrim($this->controllerClass, '\\')));
 
+        $authModelFile = sprintf('%s%s', $prefix, 'models/Auth.php');
+        $formModelFile = sprintf('%s%s', $prefix, 'models/LoginForm.php');
+        $authControllerFile = sprintf('%s%s', $prefix, 'controllers/AuthControllers.php');
+        $authControllerSwaggerFile = sprintf('%s%s', $prefix, '/swagger/controllers/AuthControllers.php');
+// var_dump($authModelFile);
+// var_dump($formModelFile);
+// exit;
         $files = [
-            new CodeFile($controllerFile, $this->render('controllerNew.php')),
-            new CodeFile($controllerSwaggerFile, $this->render('controllerSwagger.php')),
-            new CodeFile($modelSwaggerFile, $this->render('modelSwagger.php')),
+            new CodeFile($authModelFile, $this->render('authModel.php')),
+            new CodeFile($formModelFile, $this->render('authForm.php')),
+
+            // new CodeFile($controllerFile, $this->render('controllerNew.php')),
+            // new CodeFile($controllerSwaggerFile, $this->render('controllerSwagger.php')),
+            // new CodeFile($modelSwaggerFile, $this->render('modelSwagger.php')),
         ];
 
         if (!empty($this->searchModelClass)) {

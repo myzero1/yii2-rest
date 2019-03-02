@@ -18,11 +18,6 @@ if ($modelClass === $searchModelClass) {
 }
 
 /* @var $class ActiveRecordInterface */
-$class = $generator->modelClass;
-$pks = $class::primaryKey();
-$urlParams = $generator->generateUrlParams();
-$actionParams = $generator->generateActionParams();
-$actionParamComments = $generator->generateActionParamComments();
 
 echo "<?php\n";
 ?>
