@@ -34,10 +34,18 @@ class Generator extends \yii\gii\Generator
     public $indexWidgetType = 'grid';
     public $searchModelClass = '';
     public $apiConfig='api\modules\v1\config\rules';
-    public $tableName;
     public $tableNames;
     public $classNames;
     public $db = 'db';
+
+    // public $userTable;
+    public $tableName;
+    public $userNameFieldGroup1 = 'username';
+    public $userNameFieldGroup2 = 'email';
+    public $userNameFieldGroup3 = 'phone';
+    public $userFieldPassword = 'password_hash';
+
+    public $standardizeCapitals = false;
     /**
      * @var bool whether to wrap the `GridView` or `ListView` widget with the `yii\widgets\Pjax` widget
      * @since 2.0.5
@@ -68,8 +76,10 @@ class Generator extends \yii\gii\Generator
     public function rules()
     {
         return array_merge(parent::rules(), [
-            [['controllerClass', 'baseControllerClass'], 'filter', 'filter' => 'trim'],
-            [['controllerClass', 'baseControllerClass', 'indexWidgetType'], 'required'],
+            [['controllerClass', 'baseControllerClass', 'tableName', 'userFieldPassword', 'userNameFieldGroup1', 'userNameFieldGroup2', 'userNameFieldGroup3'], 'filter', 'filter' => 'trim'],
+            [['controllerClass', 'baseControllerClass', 'indexWidgetType', 'tableName', 'userFieldPassword'], 'required'],
+            [['tableName'], 'match', 'pattern' => '/^([\w ]+\.)?([\w\* ]+)$/', 'message' => 'Only word characters, and optionally spaces, an asterisk and/or a dot are allowed.'],
+            [['tableName'], 'validateTableName'],
             [['controllerClass', 'baseControllerClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
             [['baseControllerClass'], 'validateClass', 'params' => ['extends' => Controller::className()]],
             [['controllerClass'], 'match', 'pattern' => '/Controller$/', 'message' => 'Controller class name must be suffixed with "Controller".'],
@@ -78,7 +88,7 @@ class Generator extends \yii\gii\Generator
             [['indexWidgetType'], 'in', 'range' => ['grid', 'list']],
             [['enableI18N', 'enablePjax'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
-            ['viewPath', 'safe'],
+            [['viewPath', 'userNameFieldGroup1', 'userNameFieldGroup2', 'userNameFieldGroup3'], 'safe'],
         ]);
     }
 
@@ -95,6 +105,12 @@ class Generator extends \yii\gii\Generator
             'indexWidgetType' => 'Widget Used in Index Page',
             'searchModelClass' => 'Search Model Class',
             'enablePjax' => 'Enable Pjax',
+
+            'tableName' => "User table name",
+            'userNameFieldGroup1' => "Username field group member one",
+            'userNameFieldGroup2' => "Username field group member two",
+            'userNameFieldGroup3' => "Username field group member three",
+            'userFieldPassword' => "Password field",
         ]);
     }
 
@@ -122,6 +138,7 @@ class Generator extends \yii\gii\Generator
             'enablePjax' => 'This indicates whether the generator should wrap the <code>GridView</code> or <code>ListView</code>
                 widget on the index page with <code>yii\widgets\Pjax</code> widget. Set this to <code>true</code> if you want to get
                 sorting, filtering and pagination without page refreshing.',
+            // 'tableName' => 'The table will be used to generate the User Model.and the auth model will use it too.',
         ]);
     }
 
@@ -159,6 +176,7 @@ class Generator extends \yii\gii\Generator
      */
     public function generate()
     {
+        // for rest controller
         $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')));
         $prefix = explode('controllers', $controllerFile);
         $prefix = $prefix[0];
@@ -185,7 +203,18 @@ class Generator extends \yii\gii\Generator
             $files[] = new CodeFile($apiConfigFile, $this->render('rules.php'));
         }
         */
-        return $files;
+
+        // for models
+        $modelGenerator = new \myzero1\rest\gii\auth\model\Generator();
+        $modelGenerator->tableName = $this->tableName;
+        $modelGenerator->modelClass = ucfirst($this->tableName);
+        $modelGenerator->ns = StringHelper::dirname(dirname($this->controllerClass)) . '\models';
+        $modelGenerator->queryNs = $modelGenerator->ns;
+        $defaultTemplate = Yii::getAlias('@vendor/myzero1/yii2-rest/src/gii/auth/model/default');
+        $modelGenerator->templates['default'] = $defaultTemplate;
+
+        $modelFiles =  $modelGenerator->generate();
+        return array_merge($files, $modelFiles);
     }
 
     /**
