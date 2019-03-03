@@ -9,6 +9,7 @@ use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
+use yii\helpers\StringHelper;
 
 /**
  * Generates CRUD
@@ -167,12 +168,16 @@ class Generator extends \yii\gii\Generator
         $controllerSwaggerFile = str_replace('controllers', 'swagger/controllers', $controllerFile);
         $modelSwaggerFile = str_replace('controllers', 'swagger/models', $controllerFile);
         $modelSwaggerFile = str_replace('Controller', '', $modelSwaggerFile);
+        $rulesFile = StringHelper::dirname(dirname($this->controllerClass)) . '\rules.php';
 
         $files = [
             new CodeFile($controllerFile, $this->render('controllerNew.php')),
             new CodeFile($controllerSwaggerFile, $this->render('controllerSwagger.php')),
             new CodeFile($modelSwaggerFile, $this->render('modelSwagger.php')),
+            new CodeFile($rulesFile, $this->render('rules.php')),
+
         ];
+        // var_dump($rulesFile);exit;
 
         if (!empty($this->searchModelClass)) {
             $searchModel = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->searchModelClass, '\\') . '.php'));

@@ -1,41 +1,42 @@
 <?php
 /**
- * This is the template for generating a CRUD controller class file.
+ * This is the template for generating REST URL config.
  */
 
-
 use yii\helpers\StringHelper;
+use yii\helpers\Json;
 
+$nsInfo = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+$nsInfoA = explode('\\', $nsInfo);
+$moduleId = $nsInfoA[count($nsInfoA)-1];
 
-/* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\crud\Generator */
+$modelNameA = explode('\\', ltrim($generator->modelClass, '\\'));
+$modelName = $modelNameA[count($modelNameA)-1];
 
-$controllerClass = StringHelper::basename($generator->controllerClass);
-$modelClass = StringHelper::basename($generator->modelClass);
-$searchModelClass = StringHelper::basename($generator->searchModelClass);
-if ($modelClass === $searchModelClass) {
-    $searchModelAlias = $searchModelClass . 'Search';
+$rulesFile = Yii::getAlias('@' . str_replace('\\', '/', $nsInfo)) . '/rules.php';
+// var_dump($rulesFile);exit;
+if (file_exists($rulesFile)) {
+    $rulesTmp = require($rulesFile);
+    $rulesStr1 = str_replace('Lw==', '/', $rulesTmp);
+    $rulesStr2 = str_replace('XA==', '\\', $rulesStr1);
+    $rulesStr = str_replace('IA==', ' ', $rulesStr2);
+    $rules = Json::decode($rulesStr, $asArray = true);
 }
 
-/* @var $class ActiveRecordInterface */
-$class = $generator->modelClass;
-$pks = $class::primaryKey();
-$urlParams = $generator->generateUrlParams();
-$actionParams = $generator->generateActionParams();
-$actionParamComments = $generator->generateActionParamComments();
-$controllerName=str_replace('controller','',strtolower($controllerClass));
+$rules[$moduleId.'/'.$modelName] = [
+    'class' => 'yii\rest\UrlRule',
+    'controller' => [$moduleId.'/'.$modelName],
+    'pluralize' => false,
+];
+$rulesStr1 = str_replace('/','Lw==', Json::encode($rules));
+$rulesStr2 = str_replace('\\','XA==', $rulesStr1);
+$rulesStr = str_replace(' ','IA==', $rulesStr2);
+
 echo "<?php\n";
-echo "/**\n";
-echo "* REST URL config\n";
-echo "*/\n";
-echo "return [
-    [
-        'class' => 'yii\\rest\UrlRule',
-        'controller' => 'v1/default',
-        'only' => ['index'],
-    ],
-    [
-        'class' => 'yii\\rest\UrlRule',
-        'controller' => 'v1/$controllerName',
-    ]
-]";
+?>
+
+/**
+ * REST URL config
+ */
+
+return '<?=$rulesStr?>';

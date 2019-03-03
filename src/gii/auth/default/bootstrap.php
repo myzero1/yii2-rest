@@ -37,13 +37,17 @@ class Bootstrap implements BootstrapInterface
             ]
         ]);
 
-        $rulesTmp = require(\Yii::getAlias('@' . str_replace('\\', '/', StringHelper::dirname(__CLASS__))) . '/rules.php');
+        $rulesFile = \Yii::getAlias('@' . str_replace('\\', '/', StringHelper::dirname(__CLASS__))) . '/rules.php';
 
-        $rulesStr1 = str_replace('Lw==', '/', $rulesTmp);
-        $rulesStr2 = str_replace('XA==', '\\', $rulesStr1);
-        $rulesStr = str_replace('IA==', ' ', $rulesStr2);
-        $rules = Json::decode($rulesStr, $asArray = true);
+        if (file_exists($rulesFile)) {
+            $rulesTmp = require($rulesFile);
+            $rulesStr1 = str_replace('Lw==', '/', $rulesTmp);
+            $rulesStr2 = str_replace('XA==', '\\', $rulesStr1);
+            $rulesStr = str_replace('IA==', ' ', $rulesStr2);
+            $rules = Json::decode($rulesStr, $asArray = true);
 
-        $app->getUrlManager()->addRules($rules, $append = false);
+            $app->getUrlManager()->addRules($rules, $append = false);
+        }
+
     }
 }
