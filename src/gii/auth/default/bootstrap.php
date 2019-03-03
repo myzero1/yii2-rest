@@ -36,7 +36,7 @@ class Bootstrap implements BootstrapInterface
             ]
         ]);
 
-        $rules = require_once(\Yii::getAlias('@' . str_replace('\\', '/', StringHelper::dirname(__CLASS__))) . '/rules.php');
+        $rules = require(\Yii::getAlias('@' . str_replace('\\', '/', StringHelper::dirname(__CLASS__))) . '/rules.php');
         $app->getUrlManager()->addRules($rules, $append = false);
     }
 }
