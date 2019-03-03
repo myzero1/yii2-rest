@@ -92,10 +92,19 @@ class AuthController extends BasicController
         if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->save()) {
             $response = Yii::$app->getResponse();
             $response->setStatusCode(201);
+
+            return [
+                'code' => 200200,
+                'msg' => 'success',
+                'data' => $model,
+            ];
         } elseif (!$model->hasErrors()) {
-            throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            return [
+                'code' => 200200,
+                'msg' => 'success',
+                'data' => $model->errors,
+            ];
         }
-        return $model;
     }
 
     /**
@@ -108,25 +117,17 @@ class AuthController extends BasicController
         $model = new LoginForm;
         $model->setAttributes(Yii::$app->request->post());
         if ($user = $model->login()) {
-            // return [
-            //     'code' => 200200,
-            //     'msg' => 'success',
-            //     'data' => $user->api_token,
-            // ];
-            return $user->api_token;
+            return [
+                'code' => 200200,
+                'msg' => 'success',
+                'data' => $user->api_token,
+            ];
         } else {
-            $errors = [];
-            foreach ($model->errors as $key => $value) {
-                $errors[] = implode(';', $value);
-            }
-            $errorMsg = implode(';', $errors);
-
-            // return [
-            //     'code' => 200500,
-            //     'msg' => $errorMsg,
-            //     'data' => '',
-            // ];
-            return $errorMsg;
+            return [
+                'code' => 200500,
+                'msg' => 'errors',
+                'data' => $model->errors,
+            ];
         }
     }
 
@@ -139,11 +140,10 @@ class AuthController extends BasicController
     {
         $user = $this->authenticate(Yii::$app->user, Yii::$app->request, Yii::$app->response);
 
-        // return [
-        //     'code' => 200500,
-        //     'msg' => '',
-        //     'data' => $user,
-        // ];
-        return $user;
+        return [
+            'code' => 200500,
+            'msg' => '',
+            'data' => $user,
+        ];
     }
 }

@@ -22,6 +22,14 @@ class BasicController extends ActiveController
 {
     public $modelClass = '';
 
+    public function init(){
+        \Yii::$app->request->parsers = [
+            'application/json' => '\yii\web\JsonParser',
+            'text/json'        => '\yii\web\JsonParser',
+        ];
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    }
+
     public function behaviors() {
         $behaviors = parent::behaviors();
         $behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
