@@ -17,6 +17,7 @@ namespace <?= $ns?>;
 
 use yii\base\BootstrapInterface;
 use yii\helpers\StringHelper;
+use yii\helpers\Json;
 
 /**
  * v1 module definition class
@@ -36,7 +37,13 @@ class Bootstrap implements BootstrapInterface
             ]
         ]);
 
-        $rules = require(\Yii::getAlias('@' . str_replace('\\', '/', StringHelper::dirname(__CLASS__))) . '/rules.php');
+        $rulesTmp = require(\Yii::getAlias('@' . str_replace('\\', '/', StringHelper::dirname(__CLASS__))) . '/rules.php');
+
+        $rulesStr1 = str_replace('Lw==', '/', $rulesTmp);
+        $rulesStr2 = str_replace('XA==', '\\', $rulesStr1);
+        $rulesStr = str_replace('IA==', ' ', $rulesStr2);
+        $rules = Json::decode($rulesStr, $asArray = true);
+
         $app->getUrlManager()->addRules($rules, $append = false);
     }
 }
