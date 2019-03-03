@@ -195,3 +195,31 @@ You can then access gii page to watch the rest generator.
 ```
 http://yii2rest2.test/gii/default/view?id=api-rest
 ```
+
+
+
+
+
+
+
+
+    'bootstrap' => [
+        'log',
+        [
+            'class' => 'backend\modules\v25\Bootstrap',
+            'params' => [
+                'moduleId' => 'v25',
+                'swaggerConfig' => [
+                    'schemes' => '{http}',
+                    'host' => 'yii2rest.test',
+                    'basePath' => '/v25',
+                    'info' => [
+                        'title' => '接口文档',
+                        'version' => '1.0.0',
+                        'description' => '这是关于: __react-admin__（https://github.com/marmelab/react-admin/tree/master/packages/ra-data-simple-rest）的rest api',
+                        // 'contact' => 'name = "myzero1", email = "myzero1@sina.com"',
+                    ]
+                ],
+            ],
+        ]
+    ],

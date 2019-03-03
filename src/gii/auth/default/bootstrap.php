@@ -6,6 +6,7 @@
 use yii\helpers\StringHelper;
 
 $ns = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+$rulesFile = Yii::getAlias('@' . str_replace('\\', '/', $ns)) . '/rules.php';
 
 echo "<?php\n";
 ?>
@@ -13,6 +14,7 @@ echo "<?php\n";
 namespace <?= $ns?>;
 
 use yii\base\BootstrapInterface;
+use yii\helpers\StringHelper;
 
 /**
  * v1 module definition class
@@ -32,24 +34,7 @@ class Bootstrap implements BootstrapInterface
             ]
         ]);
 
-        $app->getUrlManager()->addRules([
-            [
-                'class' => 'yii\rest\UrlRule',
-                'controller' => [
-                    'v12/user'
-                ],
-                'pluralize' => false,
-            ],
-            [
-                'class' => 'yii\rest\UrlRule',
-                'controller' => ['v1/auth'],
-                'pluralize' => false,
-                'extraPatterns' => [
-                    'POST login' => 'login',
-                    'POST join' => 'join',
-                    'GET info' => 'info',
-                ],
-            ],
-        ], $append = false);
+        $rules = require_once(\Yii::getAlias('@' . str_replace('\\', '/', StringHelper::dirname(__CLASS__))) . '/rules.php');
+        $app->getUrlManager()->addRules($rules, $append = false);
     }
 }

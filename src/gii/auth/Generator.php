@@ -189,6 +189,7 @@ class Generator extends \yii\gii\Generator
         $basicControllerFile = sprintf('%s%s', $prefix, 'components/BasicController.php');
         $bootstrapFile = sprintf('%s%s', $prefix, 'Bootstrap.php');
         $moduleFile = sprintf('%s%s', $prefix, 'Module.php');
+        $rulesFile = sprintf('%s%s', $prefix, 'rules.php');
 
         $files = [
             new CodeFile($authModelFile, $this->render('authModel.php')),
@@ -198,6 +199,7 @@ class Generator extends \yii\gii\Generator
             new CodeFile($basicControllerFile, $this->render('basicController.php')),
             new CodeFile($bootstrapFile, $this->render('bootstrap.php')),
             new CodeFile($moduleFile, $this->render('module.php')),
+            new CodeFile($rulesFile, $this->render('authRules.php')),
         ];
 
         if (!empty($this->searchModelClass)) {
