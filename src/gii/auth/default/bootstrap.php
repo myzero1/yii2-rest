@@ -8,6 +8,8 @@ use yii\helpers\StringHelper;
 $ns = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
 $rulesFile = Yii::getAlias('@' . str_replace('\\', '/', $ns)) . '/rules.php';
 
+$moduleId = str_replace(StringHelper::dirname($ns).'\\', '', $ns);
+
 echo "<?php\n";
 ?>
 
@@ -28,7 +30,7 @@ class Bootstrap implements BootstrapInterface
     {
 
         $app->setModules([
-            $this->params['moduleId'] => [
+            '<?=$moduleId?>' => [
                 'class' => str_replace('Bootstrap', 'Module', __CLASS__),
                 'params' => $this->params,
             ]
