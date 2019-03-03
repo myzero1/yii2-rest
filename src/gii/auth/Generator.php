@@ -226,6 +226,9 @@ class Generator extends \yii\gii\Generator
         $defaultTemplate = Yii::getAlias('@vendor/myzero1/yii2-rest/src/gii/auth/model/default');
         $modelGenerator->templates['default'] = $defaultTemplate;
 
+        $authModelSwaagerFile = sprintf('%sswagger/models/%s.php', $prefix, $modelClass3);
+        $files[] = new CodeFile($authModelSwaagerFile, $this->render('authModelSwagger.php'));
+
         $modelFiles =  $modelGenerator->generate();
         return array_merge($modelFiles, $files);
     }

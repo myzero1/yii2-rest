@@ -3,6 +3,10 @@
  * This is the swagger's template of model.
  */
 
+$modelClass1 = str_replace('_', ' ', $generator->tableName);
+$modelClass2 = ucwords($modelClass1);
+$modelClass3 = str_replace(' ', '', $modelClass2);
+
 echo "<?php\n";
 ?>
 
@@ -50,7 +54,7 @@ echo "<?php\n";
             description = "record content",
             required = true,
             type = "string",
-            @SWG\Schema(ref = "#/definitions/User")
+            @SWG\Schema(ref = "#/definitions/<?=$modelClass3?>")
          ),
 
          @SWG\Response(

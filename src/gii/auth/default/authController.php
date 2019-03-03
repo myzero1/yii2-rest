@@ -19,6 +19,10 @@ if ($modelClass === $searchModelClass) {
 
 $prefix = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
 
+$modelClass1 = str_replace('_', ' ', $generator->tableName);
+$modelClass2 = ucwords($modelClass1);
+$modelClass3 = str_replace(' ', '', $modelClass2);
+
 echo "<?php\n";
 ?>
 
@@ -33,7 +37,7 @@ use yii\filters\AccessControl;
 
 use <?= sprintf('%s\%s', $prefix, 'components\BasicController') ?>;
 use <?= sprintf('%s\%s', $prefix, 'models\form\LoginForm') ?>;
-use <?= sprintf('%s\models\%s as User', $prefix, ucfirst($generator->tableName)) ?>;
+use <?= sprintf('%s\models\%s as User', $prefix, $modelClass3) ?>;
 
 /**
  * AuthController implements the CRUD actions for User model.
