@@ -10,6 +10,7 @@ use yii\helpers\Inflector;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\helpers\StringHelper;
+use yii\helpers\FileHelper;
 
 /**
  * Generates CRUD
@@ -84,7 +85,7 @@ class Generator extends \yii\gii\Generator
             [['baseControllerClass'], 'validateClass', 'params' => ['extends' => Controller::className()]],
             [['controllerClass'], 'match', 'pattern' => '/Controller$/', 'message' => 'Controller class name must be suffixed with "Controller".'],
             [['controllerClass'], 'match', 'pattern' => '/(^|\\\\)[A-Z][^\\\\]+Controller$/', 'message' => 'Controller class name must start with an uppercase letter.'],
-            [['controllerClass'], 'validateNewClass'],
+            [['controllerClass'], 'validateNewClassNew'],
             [['indexWidgetType'], 'in', 'range' => ['grid', 'list']],
             [['enableI18N', 'enablePjax'], 'boolean'],
             [['messageCategory'], 'validateMessageCategory', 'skipOnEmpty' => false],
@@ -186,6 +187,8 @@ class Generator extends \yii\gii\Generator
         $authControllerFile = sprintf('%s%s', $prefix, 'controllers/AuthController.php');
         $authControllerSwaggerFile = sprintf('%s%s', $prefix, 'swagger/controllers/AuthController.php');
         $basicControllerFile = sprintf('%s%s', $prefix, 'components/BasicController.php');
+        $bootstrapFile = sprintf('%s%s', $prefix, 'Bootstrap.php');
+        $moduleFile = sprintf('%s%s', $prefix, 'Module.php');
 
         $files = [
             new CodeFile($authModelFile, $this->render('authModel.php')),
@@ -193,6 +196,8 @@ class Generator extends \yii\gii\Generator
             new CodeFile($authControllerFile, $this->render('authController.php')),
             new CodeFile($authControllerSwaggerFile, $this->render('authControllerSwaager.php')),
             new CodeFile($basicControllerFile, $this->render('basicController.php')),
+            new CodeFile($bootstrapFile, $this->render('bootstrap.php')),
+            new CodeFile($moduleFile, $this->render('module.php')),
         ];
 
         if (!empty($this->searchModelClass)) {
@@ -907,5 +912,28 @@ class Generator extends \yii\gii\Generator
         }
 
         return false;
+    }
+
+    /**
+     * An inline validator that checks if the attribute value refers to a valid namespaced class name.
+     * The validator will check if the directory containing the new class file exist or not.
+     * @param string $attribute the attribute being validated
+     * @param array $params the validation options
+     */
+    public function validateNewClassNew($attribute, $params)
+    {
+        $class = ltrim($this->$attribute, '\\');
+        if (($pos = strrpos($class, '\\')) === false) {
+            $this->addError($attribute, "The class name must contain fully qualified namespace name.");
+        } else {
+            $ns = substr($class, 0, $pos);
+            $path = Yii::getAlias('@' . str_replace('\\', '/', $ns), false);
+            if ($path === false) {
+                $this->addError($attribute, "The class namespace is invalid: $ns");
+            } elseif (!is_dir($path)) {
+                FileHelper::createDirectory($path, $mode = 0775, $recursive = true);
+                // $this->addError($attribute, "Please make sure the directory containing this class exists: $path");
+            }
+        }
     }
 }

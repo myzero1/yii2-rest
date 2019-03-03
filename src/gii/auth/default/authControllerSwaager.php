@@ -43,7 +43,7 @@ echo "<?php\n";
          summary="auth join",
          description="Auth join: Post /auth/join",
          produces={"application/json"},
-     
+
          @SWG\Parameter(
             in = "body",
             name = "body",
@@ -52,7 +52,7 @@ echo "<?php\n";
             type = "string",
             @SWG\Schema(ref = "#/definitions/User")
          ),
-     
+
          @SWG\Response(
              response = 200,
              description = "success"
@@ -64,7 +64,7 @@ echo "<?php\n";
          summary="auth login",
          description="Auth login: Post /auth/loin",
          produces={"application/json"},
-     
+
          @SWG\Parameter(
             in = "body",
             name = "body",
@@ -73,7 +73,7 @@ echo "<?php\n";
             type = "string",
             @SWG\Schema(ref = "#/definitions/Auth")
          ),
-     
+
          @SWG\Response(
              response = 200,
              description = "success"
@@ -94,7 +94,7 @@ echo "<?php\n";
             type = "string",
             default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
          ),
-     
+
          @SWG\Response(
              response = 200,
              description = "success"
