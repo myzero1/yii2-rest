@@ -7,6 +7,19 @@ use yii\helpers\StringHelper;
 
 $ns = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\'))) . '\\models';
 
+$where = [];
+if (trim($generator->userNameFieldGroup1)) {
+    $where[] = sprintf('%s = :username', trim($generator->userNameFieldGroup1));
+}
+if (trim($generator->userNameFieldGroup2)) {
+    $where[] = sprintf('%s = :username', trim($generator->userNameFieldGroup2));
+}
+if (trim($generator->userNameFieldGroup3)) {
+    $where[] = sprintf('%s = :username', trim($generator->userNameFieldGroup3));
+}
+
+$whereStr = implode(' OR ', $where);
+
 echo "<?php\n";
 ?>
 
@@ -129,7 +142,9 @@ class Auth extends ActiveRecord implements IdentityInterface, RateLimitInterface
      */
     public static function findByUsername($username)
     {
-        return static::find()->where('username = :username', [':username' => $username])->one();
+        // return static::find()->where('username = :username', [':username' => $username])->one();
+
+        return static::find()->where('<?=$whereStr?>', [':username' => $username])->one();
     }
 
     /**

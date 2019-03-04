@@ -78,7 +78,7 @@ class Generator extends \yii\gii\Generator
     {
         return array_merge(parent::rules(), [
             [['controllerClass', 'baseControllerClass', 'tableName', 'userFieldPassword', 'userNameFieldGroup1', 'userNameFieldGroup2', 'userNameFieldGroup3'], 'filter', 'filter' => 'trim'],
-            [['controllerClass', 'baseControllerClass', 'indexWidgetType', 'tableName', 'userFieldPassword'], 'required'],
+            [['controllerClass', 'baseControllerClass', 'indexWidgetType', 'tableName', 'userFieldPassword', 'userNameFieldGroup1'], 'required'],
             [['tableName'], 'match', 'pattern' => '/^([\w ]+\.)?([\w\* ]+)$/', 'message' => 'Only word characters, and optionally spaces, an asterisk and/or a dot are allowed.'],
             [['tableName'], 'validateTableName'],
             [['controllerClass', 'baseControllerClass'], 'match', 'pattern' => '/^[\w\\\\]*$/', 'message' => 'Only word characters and backslashes are allowed.'],
@@ -140,6 +140,9 @@ class Generator extends \yii\gii\Generator
                 widget on the index page with <code>yii\widgets\Pjax</code> widget. Set this to <code>true</code> if you want to get
                 sorting, filtering and pagination without page refreshing.',
             // 'tableName' => 'The table will be used to generate the User Model.and the auth model will use it too.',
+            'userNameFieldGroup1' => 'UserNameFieldGroup includes at least one member.',
+            'userNameFieldGroup2' => 'UserNameFieldGroup includes at least one member.',
+            'userNameFieldGroup3' => 'UserNameFieldGroup includes at least one member.',
         ]);
     }
 
