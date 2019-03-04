@@ -202,7 +202,6 @@ http://yii2rest2.test/gii/default/view?id=api-rest
 
 
 
-
     'bootstrap' => [
         'log',
         [
@@ -217,7 +216,10 @@ http://yii2rest2.test/gii/default/view?id=api-rest
                         'title' => '接口文档',
                         'version' => '1.0.0',
                         'description' => '这是关于: __react-admin__（https://github.com/marmelab/react-admin/tree/master/packages/ra-data-simple-rest）的rest api',
-                        // 'contact' => 'name = "myzero1", email = "myzero1@sina.com"',
+                            'contact' => [
+                                'name' => 'myzero1',
+                                'email' => 'myzero1@sina.com',
+                            ],
                     ]
                 ],
             ],
