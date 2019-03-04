@@ -50,7 +50,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getName()
     {
-        return "Obj's rest generator with wagger";
+        return "Rest Controller with wagger";
     }
 
     /**

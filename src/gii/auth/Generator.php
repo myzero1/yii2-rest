@@ -59,7 +59,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getName()
     {
-        return "Auth's rest generator with wagger";
+        return "Rest module with wagger";
     }
 
     /**
@@ -68,7 +68,7 @@ class Generator extends \yii\gii\Generator
     public function getDescription()
     {
         return 'This generator generates a resetful controller that implement CRUD (Create, Read, Update, Delete)
-            operations for the specified data model.For logic auth.';
+            operations for the specified data model.For logic auth.it also generates a resetful module';
     }
 
     /**
