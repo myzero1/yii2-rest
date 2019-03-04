@@ -28,11 +28,18 @@ foreach ($properties as $property => $data) {
 
 unset($properties['id']);
 
+$modelClass1 = str_replace('_', ' ', $generator->tableName);
+$modelClass2 = ucwords($modelClass1);
+$modelClass3 = str_replace(' ', '', $modelClass2);
+$modelTag = lcfirst($modelClass3);
+
+$controllerName = str_replace('_', '-', $generator->tableName);
+
 echo "<?php\n";
 ?>
 /**
      @SWG\Get(path="/<?= $controllerName ?>",
-         tags={"<?= $controllerName ?>"},
+         tags={"<?= $modelTag ?>"},
          summary="record list",
          description="Record list: actionIndex GET_LIST GET /<?= $controllerName ?>?sort=[""id"",""ASC""]&range=[0, 2]&filter={""status"":""10"",""ids"":[1,3,5]}",
          produces={"application/json"},
@@ -79,7 +86,7 @@ echo "<?php\n";
      
      
      @SWG\Get(path="/<?= $controllerName ?>/{id}",
-         tags={"<?= $controllerName ?>"},
+         tags={"<?= $modelTag ?>"},
          summary="record view",
          description="Record list: actionView GET_ONE GET /<?= $controllerName ?>/1",
          produces={"application/json"},
@@ -110,7 +117,7 @@ echo "<?php\n";
      
      
      @SWG\Post(path="/<?= $controllerName ?>",
-         tags={"<?= $controllerName ?>"},
+         tags={"<?= $modelTag ?>"},
          summary="record create",
          description="Record create: actionCreate CREATE Post /<?= $controllerName ?>",
          produces={"application/json"},
@@ -141,7 +148,7 @@ echo "<?php\n";
      
      
      @SWG\Put(path="/<?= $controllerName ?>/{id}",
-         tags={"<?= $controllerName ?>"},
+         tags={"<?= $modelTag ?>"},
          summary="record update",
          description="Record update: actionUpdate UPDATE PUT /<?= $controllerName ?>/1",
          produces={"application/json"},
@@ -180,7 +187,7 @@ echo "<?php\n";
      
      
      @SWG\Delete(path="/<?= $controllerName ?>/{id}",
-         tags={"<?= $controllerName ?>"},
+         tags={"<?= $modelTag ?>"},
          summary="record delete",
          description="Record delete: actionDelete DELETE DELETE  /<?= $controllerName ?>/1",
          produces={"application/json"},

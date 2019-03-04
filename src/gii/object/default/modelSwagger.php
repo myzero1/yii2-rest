@@ -27,13 +27,17 @@ foreach ($properties as $property => $data) {
 
 unset($properties['id']);
 
+$modelClass1 = str_replace('_', ' ', $generator->tableName);
+$modelClass2 = ucwords($modelClass1);
+$modelClass3 = str_replace(' ', '', $modelClass2);
+
 echo "<?php\n";
 ?>
 
 /**
     @SWG\Tag(
-        name="<?= $controllerName ?>",
-        description="<?= $controllerName ?>",
+        name="<?= lcfirst($modelClass3) ?>",
+        description="<?= $modelClass3 ?> description",
         @SWG\ExternalDocumentation(
             description="Find out more about our store",
             url="http://swagger.io"
@@ -43,7 +47,7 @@ echo "<?php\n";
 
 /**
     @SWG\Definition(
-        definition="<?= ucfirst($generator->tableName) ?>",
+        definition="<?= $modelClass3 ?>",
         required={"<?= implode('","', $required) ?>"},
 
     <?php foreach ($properties as $property => $data): ?>

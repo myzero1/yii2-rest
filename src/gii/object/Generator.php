@@ -165,9 +165,13 @@ class Generator extends \yii\gii\Generator
     {
         $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')) . '.php');
         $controllerSwaggerFile = str_replace('controllers', 'swagger/controllers', $controllerFile);
-        $modelSwaggerFile = str_replace('controllers', 'swagger/models', $controllerFile);
-        $modelSwaggerFile = str_replace('Controller', '', $modelSwaggerFile);
         $rulesFile = explode('controllers', $controllerFile)[0] . '/rules.php';
+        
+
+        $modelClass1 = str_replace('_', ' ', $this->tableName);
+        $modelClass2 = ucwords($modelClass1);
+        $modelClass3 = str_replace(' ', '', $modelClass2);
+        $modelSwaggerFile = explode('controllers', $controllerFile)[0] . '/swagger/models/' . $modelClass3 . '.php';
 
         $files = [
             new CodeFile($controllerFile, $this->render('controllerNew.php')),
@@ -176,7 +180,6 @@ class Generator extends \yii\gii\Generator
             new CodeFile($rulesFile, $this->render('rules.php')),
 
         ];
-        // var_dump($rulesFile);exit;
 
         if (!empty($this->searchModelClass)) {
             $searchModel = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->searchModelClass, '\\') . '.php'));
