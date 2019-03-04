@@ -205,13 +205,14 @@ http://yii2rest2.test/gii/default/view?id=api-rest
     'bootstrap' => [
         'log',
         [
-            'class' => 'backend\modules\v25\Bootstrap',
+            'class' => 'backend\modules\v1\Bootstrap',
             'params' => [
-                'moduleId' => 'v25',
+                'apiTokenExpire' => 1*24*3600,      
+                'rateLimit' => [2000,3], // 2times/3s 
                 'swaggerConfig' => [
                     'schemes' => '{http}',
-                    'host' => 'yii2rest.test',
-                    'basePath' => '/v25',
+                    'host' => 'yii2rest3.test',
+                    'basePath' => '/v1',
                     'info' => [
                         'title' => '接口文档',
                         'version' => '1.0.0',

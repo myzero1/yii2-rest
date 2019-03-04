@@ -42,7 +42,11 @@ class Auth extends ActiveRecord implements IdentityInterface, RateLimitInterface
     #大于2，譬如下面  2秒内只能访问三次
     # 文档标注：返回允许的请求的最大数目及时间，例如，[100, 600] 表示在600秒内最多100次的API调用。
     public  function getRateLimit($request, $action){
-        return Yii::$app->params['rateLimit'];
+        $nsInfo = explode('\\', __CLASS__);
+        $moduleId = $nsInfo[count($nsInfo)-3];
+        $rateLimit = Yii::$app->modules[$moduleId]->params['rateLimit'];
+        return $rateLimit;
+        // return Yii::$app->params['rateLimit'];
     }
 
     # 文档标注： 返回剩余的允许的请求和相应的UNIX时间戳数 当最后一次速率限制检查时。
@@ -101,7 +105,10 @@ class Auth extends ActiveRecord implements IdentityInterface, RateLimitInterface
             return false;
         }
         $timestamp = (int) substr($token, strrpos($token, '_') + 1);
-        $expire = Yii::$app->params['user.apiTokenExpire'];
+        // $expire = Yii::$app->params['user.apiTokenExpire'];
+        $nsInfo = explode('\\', __CLASS__);
+        $moduleId = $nsInfo[count($nsInfo)-3];
+        $expire = Yii::$app->modules[$moduleId]->params['apiTokenExpire'];
         return $timestamp + $expire >= time();
     }
 
