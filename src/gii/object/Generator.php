@@ -164,11 +164,10 @@ class Generator extends \yii\gii\Generator
     public function generate()
     {
         $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')) . '.php');
-        $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')) . '.php');
         $controllerSwaggerFile = str_replace('controllers', 'swagger/controllers', $controllerFile);
         $modelSwaggerFile = str_replace('controllers', 'swagger/models', $controllerFile);
         $modelSwaggerFile = str_replace('Controller', '', $modelSwaggerFile);
-        $rulesFile = StringHelper::dirname(dirname($this->controllerClass)) . '\rules.php';
+        $rulesFile = explode('controllers', $controllerFile)[0] . '/rules.php';
 
         $files = [
             new CodeFile($controllerFile, $this->render('controllerNew.php')),
