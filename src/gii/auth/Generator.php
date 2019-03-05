@@ -959,14 +959,18 @@ class Generator extends \yii\gii\Generator
         $addFieldsA[] = 'allowance';
         $addFieldsA[] = 'allowance_updated_at';
 
+        $userNameFieldGroup = [];
         if ($this->userNameFieldGroup1) {
             $addFieldsA[] = $this->userNameFieldGroup1;
+            $userNameFieldGroup[] = $this->userNameFieldGroup1;
         }
         if ($this->userNameFieldGroup2) {
             $addFieldsA[] = $this->userNameFieldGroup2;
+            $userNameFieldGroup[] = $this->userNameFieldGroup2;
         }
         if ($this->userNameFieldGroup3) {
             $addFieldsA[] = $this->userNameFieldGroup3;
+            $userNameFieldGroup[] = $this->userNameFieldGroup3;
         }
 
         foreach ($addFieldsA as $k => $v) {
@@ -989,11 +993,32 @@ class Generator extends \yii\gii\Generator
                 } else {
                     $sql = "ALTER TABLE $this->tableName ADD $v VARCHAR (255)";
                 }
-                
+
                 \Yii::$app->db->createCommand($sql)->execute();
+
                 $returnMsgA[] = sprintf('Add column "%s" to "%s"', $v, $this->tableName);
             } else {
                 $returnMsgA[] = sprintf('Field "%s" already exists in table "%s"', $v, $this->tableName);
+            }
+
+            if (in_array($v, $userNameFieldGroup)) {
+                $indexName = $this->tableName . '_' . $v;
+                $queryIndex = "
+                    SELECT
+                        1
+                    FROM
+                        information_schema.statistics
+                    WHERE
+                        table_schema = '$database'
+                    AND table_name = '$this->tableName'
+                    AND index_name = '$indexName'
+                ";
+
+                $resultIndex = \Yii::$app->db->createCommand($queryIndex)->queryAll();
+                if (!count($resultIndex)) {
+                    $sqlu = "ALTER TABLE $this->tableName ADD UNIQUE $indexName( $v )";
+                    \Yii::$app->db->createCommand($sqlu)->execute();
+                }
             }
         }
 
