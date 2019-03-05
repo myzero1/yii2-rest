@@ -944,4 +944,52 @@ class Generator extends \yii\gii\Generator
             }
         }
     }
+
+    /**
+     * Returns the message to be displayed when the newly generated code is saved successfully.
+     * Child classes may override this method to customize the message.
+     * @return string the message to be displayed when the newly generated code is saved successfully.
+     */
+    public function successMessage()
+    {
+        $returnMsgA[] = 'The code has been generated successfully.';
+
+        $database = \Yii::$app->db->createCommand("SELECT DATABASE()")->queryScalar();
+        $addFieldsA[] = 'api_token';
+        $addFieldsA[] = 'allowance';
+        $addFieldsA[] = 'allowance_updated_at';
+        $addFieldsA[] = $this->userNameFieldGroup1;
+        $addFieldsA[] = $this->userNameFieldGroup2;
+        $addFieldsA[] = $this->userNameFieldGroup3;
+
+        foreach ($addFieldsA as $k => $v) {
+            $query = "
+                SELECT
+                    1
+                FROM
+                    information_schema.COLUMNS
+                WHERE
+                    TABLE_SCHEMA = '$database'
+                AND table_name = '$this->tableName'
+                AND column_name = '$v'
+            ";
+
+            $result = \Yii::$app->db->createCommand($query)->queryAll();
+
+            if (!count($result)) {
+                if (in_array($v, ['allowance', 'allowance_updated_at'])) {
+                    $sql = "ALTER TABLE $this->tableName ADD $v INT (11)";
+                } else {
+                    $sql = "ALTER TABLE $this->tableName ADD $v VARCHAR (255)";
+                }
+                
+                \Yii::$app->db->createCommand($sql)->execute();
+                $returnMsgA[] = sprintf('Add column "%s" to "%s"', $v, $this->tableName);
+            } else {
+                $returnMsgA[] = sprintf('Field "%s" already exists in table "%s"', $v, $this->tableName);
+            }
+        }
+
+        return implode("<br>", $returnMsgA);
+    }
 }
