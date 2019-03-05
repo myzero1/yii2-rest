@@ -6,11 +6,13 @@ Rest api with wagger in yii2.
 Show time
 ------------
 
-![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot1/101.png)
-![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot1/102.png)
-![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot1/103.png)
-![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot1/104.png)
-![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot1/105.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/201.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/202.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/203.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/204.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/205.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/206.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/207.png)
 
 Installation
 ------------
@@ -41,50 +43,39 @@ Once the extension is installed, simply modify your application configuration(ma
 ```php
 return [
     ......
-    'components' => [
-        'request'      => [
-            'parsers' => [
-                'application/json' => 'yii\web\JsonParser',
-                'text/json'        => 'yii\web\JsonParser',
-            ],
-        ],
+    'bootstrap' => [
         ......
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-                [
-                    'class' => 'yii\rest\UrlRule' ,
-                    'controller' => [
-                        'rest/user'
+        'log',
+        [
+            'class' => 'backend\modules\v1\Bootstrap',
+            'params' => [
+                'apiTokenExpire' => 1*24*3600,      
+                'rateLimit' => [2000,3], // 2times/3s 
+                'swaggerConfig' => [
+                    'schemes' => '{http}',
+                    'host' => 'yii2rest3.test',
+                    'basePath' => '/v1',
+                    'info' => [
+                        'title' => '接口文档',
+                        'version' => '1.0.0',
+                        'description' => '这是关于: __react-admin__（https://github.com/marmelab/react-admin/tree/master/packages/ra-data-simple-rest）的rest api',
+                            'contact' => [
+                                'name' => 'myzero1',
+                                'email' => 'myzero1@sina.com',
+                            ],
                     ]
                 ],
-                '<controller:\+w>/action:\+w>' => '<controller>/<action>'
             ],
         ],
         ......
     ],
     ......
-    'modules' => [
+    'components' => [
         ......
-        'rest' => [
-            'class' => 'myzero1\rest\Module',
-            'params' => [
-                'swaggerConfig' => [
-                    'schemes' => '{"http"}',
-                    'host' => 'yii2rest2.test',
-                    'basePath' => '/rest',
-                    'info' => [
-                        'title' => '接口文档',
-                        'version' => '1.0.0',
-                        'description' => '这是关于: __react-admin__（ https://github.com/marmelab/react-admin/tree/master/packages/ra-data-simple-rest ）的rest api',
-                        'contact' => [
-                            'name' => 'myzero1',
-                            'email' => 'myzero1@sina.com',
-                        ],
-                    ]
-                ]
-            ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [],
         ],
         ......
     ],
@@ -100,12 +91,18 @@ Setting the gii in main-local.php as follows:
         'class' => 'yii\gii\Module',
         'allowedIPs' => ['*'],
         'generators' => [
-            'api-rest' => [
-                'class' => 'myzero1\rest\gii\Generator',
+            'module-rest-swagger' => [
+                'class' => 'myzero1\rest\gii\auth\Generator',
                 'templates' => [
-                    'rest' => 'myzero1\rest\gii\default'
+                    'rest' => 'myzero1\rest\gii\auth\default'
                 ]
-            ]
+            ],
+            'obj-rest-swagger' => [
+                'class' => 'myzero1\rest\gii\object\Generator',
+                'templates' => [
+                    'rest' => 'myzero1\rest\gii\object\default'
+                ]
+            ],
         ]
     ];
 ```
@@ -114,7 +111,38 @@ Setting the gii in main-local.php as follows:
 Setting the actions in siteController.php as follows:
 
 ```php
-
+use yii\filters\AccessControl;
+use yii\helpers\Url;
+......
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'doc', 'api'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
+......
     /**
      * {@inheritdoc}
      */

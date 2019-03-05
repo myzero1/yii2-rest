@@ -1,8 +1,20 @@
 <?php
-namespace myzero1\rest\models;
+/**
+ * This is the template for generating CRUD search class of the specified model.
+ */
+
+use yii\helpers\StringHelper;
+
+$nsp = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\'))) . '\\models';
+
+echo "<?php\n";
+?>
+
+namespace <?= $nsp . '\form'?>;
+
 use Yii;
 use yii\base\Model;
-use myzero1\rest\models\Auth as User;
+use <?= $nsp?>\Auth as User;
 /**
  * Login form
  */

@@ -1,5 +1,5 @@
 <?php
-namespace myzero1\rest\gii;
+namespace myzero1\rest\gii\object;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -9,6 +9,7 @@ use yii\gii\CodeFile;
 use yii\helpers\Inflector;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
+use yii\helpers\StringHelper;
 
 /**
  * Generates CRUD
@@ -49,7 +50,7 @@ class Generator extends \yii\gii\Generator
      */
     public function getName()
     {
-        return 'REST Generator';
+        return "Rest Controller with wagger";
     }
 
     /**
@@ -58,7 +59,7 @@ class Generator extends \yii\gii\Generator
     public function getDescription()
     {
         return 'This generator generates a resetful controller that implement CRUD (Create, Read, Update, Delete)
-            operations for the specified data model.';
+            operations for the specified data model.For logic object.';
     }
 
     /**
@@ -163,15 +164,21 @@ class Generator extends \yii\gii\Generator
     public function generate()
     {
         $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')) . '.php');
-        $controllerFile = Yii::getAlias('@' . str_replace('\\', '/', ltrim($this->controllerClass, '\\')) . '.php');
         $controllerSwaggerFile = str_replace('controllers', 'swagger/controllers', $controllerFile);
-        $modelSwaggerFile = str_replace('controllers', 'swagger/models', $controllerFile);
-        $modelSwaggerFile = str_replace('Controller', '', $modelSwaggerFile);
+        $rulesFile = explode('controllers', $controllerFile)[0] . '/rules.php';
+        
+
+        $modelClass1 = str_replace('_', ' ', $this->tableName);
+        $modelClass2 = ucwords($modelClass1);
+        $modelClass3 = str_replace(' ', '', $modelClass2);
+        $modelSwaggerFile = explode('controllers', $controllerFile)[0] . '/swagger/models/' . $modelClass3 . '.php';
 
         $files = [
             new CodeFile($controllerFile, $this->render('controllerNew.php')),
             new CodeFile($controllerSwaggerFile, $this->render('controllerSwagger.php')),
             new CodeFile($modelSwaggerFile, $this->render('modelSwagger.php')),
+            new CodeFile($rulesFile, $this->render('rules.php')),
+
         ];
 
         if (!empty($this->searchModelClass)) {

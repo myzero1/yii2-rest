@@ -1,15 +1,58 @@
 <?php
-namespace myzero1\rest\components;
+/**
+ * This is the swagger's template of model.
+ */
+
+use yii\helpers\StringHelper;
+
+$prefix = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+
+echo "<?php\n";
+?>
+
+namespace <?= sprintf('%s\%s', $prefix, 'components') ?>;
+
 use yii\web\Response;
 use yii\rest\ActiveController;
 use yii\filters\auth\HttpBearerAuth;
-use myzero1\rest\components\ApiDataProvider;
 use yii\filters\RateLimiter;
 use yii\filters\Cors;
 
-class ApiController extends ActiveController
+class BasicController extends ActiveController
 {
     public $modelClass = '';
+
+    public function init(){
+        \Yii::$app->request->parsers = [
+            'application/json' => '\yii\web\JsonParser',
+            'text/json'        => '\yii\web\JsonParser',
+        ];
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        \Yii::$app->response->on(\yii\web\Response::EVENT_BEFORE_SEND, function($event){
+            $response = $event->sender;
+            $dataOrion = $response->data;
+            $data = [];
+            
+            if (isset($dataOrion['code'])) {
+                $data['code'] = $dataOrion['code'];
+            } else {
+                $data['code'] = $response->getStatusCode();
+            }
+            if (isset($dataOrion['msg'])) {
+                $data['msg'] = $dataOrion['msg'];
+            } else {
+                $data['msg'] = $response->statusText;
+            }
+            if (isset($dataOrion['data'])) {
+                $data['data'] = $dataOrion['data'];
+            } else {
+                $data['data'] = $response->data;
+            }
+
+            $response->data = $data;
+        });
+    }
 
     public function behaviors() {
         $behaviors = parent::behaviors();
@@ -49,10 +92,10 @@ class ApiController extends ActiveController
             X-Rate-Limit-Reset: 为了得到最大请求数所等待的秒数。
             你可以禁用这些头信息通过配置 yii\filters\RateLimiter::enableRateLimitHeaders 为false, 就像在上面的代码示例所示。
         */
-        $behaviors['rateLimiter'] = [
-            'class' => RateLimiter::className(),
-            'enableRateLimitHeaders' => true,
-        ];
+        // $behaviors['rateLimiter'] = [
+        //     'class' => RateLimiter::className(),
+        //     'enableRateLimitHeaders' => true,
+        // ];
 
         return $behaviors;
     }
@@ -60,7 +103,6 @@ class ApiController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
 
         //设置固定options控制器
         $actions['options'] = [
@@ -71,10 +113,5 @@ class ApiController extends ActiveController
         ];
 
         return $actions;
-    }
-
-    public function prepareDataProvider()
-    {
-        return ApiDataProvider::create($this->modelClass, \Yii::$app->request->getQueryParams());
     }
 }

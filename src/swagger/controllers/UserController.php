@@ -5,7 +5,15 @@
          summary="record list",
          description="Record list: actionIndex GET_LIST GET /users?sort=[""id"",""ASC""]&range=[0, 2]&filter={""status"":""10"",""ids"":[1,3,5]}",
          produces={"application/json"},
-     
+    
+         @SWG\Parameter(
+            in = "header",
+            name = "Authorization",
+            description = "Authorization",
+            required = true,
+            type = "string",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
+         ),
          @SWG\Parameter(
             in = "query",
             name = "sort",
@@ -44,7 +52,15 @@
          summary="record view",
          description="Record list: actionView GET_ONE GET /users/1",
          produces={"application/json"},
-     
+
+         @SWG\Parameter(
+            in = "header",
+            name = "Authorization",
+            description = "Authorization",
+            required = true,
+            type = "string",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
+         ),
          @SWG\Parameter(
             in = "path",
             name = "id",
@@ -67,7 +83,15 @@
          summary="record create",
          description="Record create: actionCreate CREATE Post /users",
          produces={"application/json"},
-     
+
+         @SWG\Parameter(
+            in = "header",
+            name = "Authorization",
+            description = "Authorization",
+            required = true,
+            type = "string",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
+         ),
          @SWG\Parameter(
             in = "body",
             name = "body",
@@ -90,7 +114,15 @@
          summary="record update",
          description="Record update: actionUpdate UPDATE PUT /users/1",
          produces={"application/json"},
-     
+
+         @SWG\Parameter(
+            in = "header",
+            name = "Authorization",
+            description = "Authorization",
+            required = true,
+            type = "string",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
+         ),
          @SWG\Parameter(
             in = "path",
             name = "id",
@@ -121,7 +153,15 @@
          summary="record delete",
          description="Record delete: actionDelete DELETE DELETE  /users/1",
          produces={"application/json"},
-     
+
+         @SWG\Parameter(
+            in = "header",
+            name = "Authorization",
+            description = "Authorization",
+            required = true,
+            type = "string",
+            default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
+         ),
          @SWG\Parameter(
             in = "path",
             name = "id",

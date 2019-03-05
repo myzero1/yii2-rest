@@ -24,6 +24,8 @@ $urlParams = $generator->generateUrlParams();
 $actionParams = $generator->generateActionParams();
 $actionParamComments = $generator->generateActionParamComments();
 
+$prefix = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+
 echo "<?php\n";
 ?>
 
@@ -39,12 +41,32 @@ use yii\data\ActiveDataProvider;
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use myzero1\rest\components\ApiController;
+
+use <?= sprintf('%s\%s', $prefix, 'components\BasicController') ?>;
 
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
-class <?= $controllerClass ?> extends ApiController <?= "\n" ?>
+class <?= $controllerClass ?> extends BasicController<?= "\n" ?>
 {
     public $modelClass = '<?= ltrim($generator->modelClass, '\\') ?>';
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function actions()
+	{
+		$actions = parent::actions();
+	    $actions['index'] = [
+	            'class' => 'yii\rest\IndexAction',
+	            'modelClass' => '<?= ltrim($generator->modelClass, '\\') ?>',
+	            'prepareDataProvider' => function(){
+	            	$searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
+			        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+			        return $dataProvider;
+	            },
+	        ];
+
+	    return $actions;
+	}
 }
