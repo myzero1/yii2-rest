@@ -958,9 +958,16 @@ class Generator extends \yii\gii\Generator
         $addFieldsA[] = 'api_token';
         $addFieldsA[] = 'allowance';
         $addFieldsA[] = 'allowance_updated_at';
-        $addFieldsA[] = $this->userNameFieldGroup1;
-        $addFieldsA[] = $this->userNameFieldGroup2;
-        $addFieldsA[] = $this->userNameFieldGroup3;
+
+        if ($this->userNameFieldGroup1) {
+            $addFieldsA[] = $this->userNameFieldGroup1;
+        }
+        if ($this->userNameFieldGroup2) {
+            $addFieldsA[] = $this->userNameFieldGroup2;
+        }
+        if ($this->userNameFieldGroup3) {
+            $addFieldsA[] = $this->userNameFieldGroup3;
+        }
 
         foreach ($addFieldsA as $k => $v) {
             $query = "
