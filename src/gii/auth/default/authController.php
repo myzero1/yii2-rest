@@ -51,30 +51,32 @@ class AuthController extends BasicController
      */
     public function behaviors()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'join'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['info'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
+        $behaviors = parent::behaviors();
+
+        $behaviors['access'] = [
+            'class' => AccessControl::className(),
+            'rules' => [
+                [
+                    'actions' => ['login', 'join'],
+                    'allow' => true,
                 ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'login' => ['post'],
-                    'join' => ['post'],
-                    'info' => ['get'],
+                [
+                    'actions' => ['info'],
+                    'allow' => true,
+                    'roles' => ['@'],
                 ],
-            ],
+            ]
         ];
+        $behaviors['verbs'] = [
+            'class' => VerbFilter::className(),
+            'actions' => [
+                'login' => ['post'],
+                'join' => ['post'],
+                'info' => ['get'],
+            ]
+        ];
+
+        return $behaviors;
     }
 
     /**
