@@ -113,35 +113,35 @@ class SwaggerApiAction extends Action
             ]
         ];
 
-        $params = array_filter(array_column(Yii::$app->modules, 'params'));
+        $params = array_filter(array_column(Yii::$app->bootstrap, 'params'));
         $swaggerConfig = array_column($params, 'swaggerConfig');
         $swaggerConfig = count($swaggerConfig) ? $swaggerConfig[0] : $swaggerConfigDefault;
-        
-        $swagger->schemes = $swaggerConfig['schemes'];
-        $swagger->host = $swaggerConfig['host'];
-        $swagger->basePath = $swaggerConfig['basePath'];
-        $swagger->info->title = $swaggerConfig['info']['title'];
-        $swagger->info->version = $swaggerConfig['info']['version'];
-        $swagger->info->description = $swaggerConfig['info']['description'];
-        $swagger->info->contact->name = $swaggerConfig['info']['contact']['name'];
-        $swagger->info->contact->email = $swaggerConfig['info']['contact']['email'];
-        
+
+        isset($swaggerConfig['schemes']) ? $swagger->schemes = $swaggerConfig['schemes'] : '';
+        isset($swaggerConfig['host']) ? $swagger->host = $swaggerConfig['host'] : '';
+        isset($swaggerConfig['basePath']) ? $swagger->basePath = $swaggerConfig['basePath'] : '';
+        isset($swaggerConfig['info']) && isset($swaggerConfig['info']['title']) ? $swagger->info->title = $swaggerConfig['info']['title'] : '';
+        isset($swaggerConfig['info']) && isset($swaggerConfig['info']['version']) ? $swagger->info->version = $swaggerConfig['info']['version'] : '';
+        isset($swaggerConfig['info']) && isset($swaggerConfig['info']['description']) ? $swagger->info->description = $swaggerConfig['info']['description'] : '';
+        isset($swaggerConfig['info']['contact']) && isset($swaggerConfig['info']) && isset($swaggerConfig['info']['contact']['name']) ? $swagger->info->contact->name = $swaggerConfig['info']['contact']['name'] : '';
+        isset($swaggerConfig['info']['contact']) && isset($swaggerConfig['info']) && isset($swaggerConfig['info']['contact']['email']) ? $swagger->info->contact->email = $swaggerConfig['info']['contact']['email'] : '';
+
         return $swagger;
     }
-    
+
     /**
      * Init cors.
      */
     protected function initCors()
     {
         $headers = Yii::$app->getResponse()->getHeaders();
-        
+
         $headers->set('Access-Control-Allow-Headers', 'Content-Type, api_key, Authorization');
         $headers->set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
         $headers->set('Access-Control-Allow-Origin', '*');
         $headers->set('Allow', 'OPTIONS,HEAD,GET');
     }
-    
+
     /**
      * @return array
      */
@@ -158,18 +158,18 @@ class SwaggerApiAction extends Action
             ],
         ];
     }
-    
+
     protected function clearCache()
     {
         $clearCache = Yii::$app->getRequest()->get('clear-cache', false);
         if ($clearCache !== false) {
             $this->getCache()->delete($this->cacheKey);
-            
+
             Yii::$app->response->content = 'Succeed clear swagger api cache.';
             Yii::$app->end();
         }
     }
-    
+
     /**
      * @return Cache
      * @throws \yii\base\InvalidConfigException
@@ -178,7 +178,7 @@ class SwaggerApiAction extends Action
     {
         return is_string($this->cache) ? Yii::$app->get($this->cache, false) : $this->cache;
     }
-    
+
     /**
      * Get swagger object
      *
