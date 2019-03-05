@@ -10,6 +10,9 @@ Show time
 ![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/202.png)
 ![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/203.png)
 ![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/204.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/205.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/206.png)
+![](https://github.com/myzero1/show-time/blob/master/yii2-rest/screenshot/207.png)
 
 Installation
 ------------
