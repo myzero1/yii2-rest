@@ -42,6 +42,7 @@ Once the extension is installed, simply modify your application configuration(ma
 return [
     ......
     'bootstrap' => [
+        ......
         'log',
         [
             'class' => 'backend\modules\v1\Bootstrap',
@@ -63,7 +64,8 @@ return [
                     ]
                 ],
             ],
-        ]
+        ],
+        ......
     ],
     ......
     'components' => [
@@ -87,18 +89,18 @@ Setting the gii in main-local.php as follows:
         'class' => 'yii\gii\Module',
         'allowedIPs' => ['*'],
         'generators' => [
+            'module-rest-swagger' => [
+                'class' => 'myzero1\rest\gii\auth\Generator',
+                'templates' => [
+                    'rest' => 'myzero1\rest\gii\auth\default'
+                ]
+            ],
             'obj-rest-swagger' => [
                 'class' => 'myzero1\rest\gii\object\Generator',
                 'templates' => [
                     'rest' => 'myzero1\rest\gii\object\default'
                 ]
             ],
-            'auth-rest-swagger' => [
-                'class' => 'myzero1\rest\gii\auth\Generator',
-                'templates' => [
-                    'rest' => 'myzero1\rest\gii\auth\default'
-                ]
-            ]
         ]
     ];
 ```
@@ -109,7 +111,7 @@ Setting the actions in siteController.php as follows:
 ```php
 use yii\filters\AccessControl;
 use yii\helpers\Url;
-
+......
     /**
      * {@inheritdoc}
      */
@@ -138,7 +140,7 @@ use yii\helpers\Url;
             ],
         ];
     }
-
+......
     /**
      * {@inheritdoc}
      */
