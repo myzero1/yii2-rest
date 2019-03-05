@@ -183,6 +183,3 @@ You can then access gii page to watch the rest generator.
 ```
 http://yii2rest2.test/gii/default/view?id=api-rest
 ```
-
-
-php yii migrate --migrationPath=@vendor/myzero1/yii2-rest/src/migrations
