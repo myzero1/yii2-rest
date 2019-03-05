@@ -52,30 +52,16 @@ echo "<?php\n";
             type = "string",
             default = "Bearer MM029y0i0yTqJFuzBMZXMRGU2VBMK32a_1551337412",
          ),
-         @SWG\Parameter(
+    <?php foreach ($properties as $property => $data): ?>
+    @SWG\Parameter(
             in = "query",
-            name = "sort",
-            description = "sort",
+            name = "<?= $property ?>",
+            description = "<?= $property ?>",
             required = false,
-            type = "string",
-            default = "[""id"",""ASC""]",
-         ),
-         @SWG\Parameter(
-            in = "query",
-            name = "range",
-            description = "range",
-            required = false,
-            type = "string",
-            default = "[0, 10]",
-         ),
-         @SWG\Parameter(
-            in = "query",
-            name = "filter",
-            description = "filter",
-            required = false,
-            type = "string",
-            default = "{""id"":""1"",""ids"":[1,3,5]}",
-         ),
+            type = "<?= $data['type'] ?>",
+            default = "",
+        ),
+    <?php endforeach; ?>
      
          @SWG\Response(
              response = 200,

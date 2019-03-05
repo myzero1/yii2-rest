@@ -28,6 +28,30 @@ class BasicController extends ActiveController
             'text/json'        => '\yii\web\JsonParser',
         ];
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        \Yii::$app->response->on(\yii\web\Response::EVENT_BEFORE_SEND, function($event){
+            $response = $event->sender;
+            $dataOrion = $response->data;
+            $data = [];
+            
+            if (isset($dataOrion['code'])) {
+                $data['code'] = $dataOrion['code'];
+            } else {
+                $data['code'] = $response->getStatusCode();
+            }
+            if (isset($dataOrion['msg'])) {
+                $data['msg'] = $dataOrion['msg'];
+            } else {
+                $data['msg'] = $response->statusText;
+            }
+            if (isset($dataOrion['data'])) {
+                $data['data'] = $dataOrion['data'];
+            } else {
+                $data['data'] = $response->data;
+            }
+
+            $response->data = $data;
+        });
     }
 
     public function behaviors() {
