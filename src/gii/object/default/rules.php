@@ -6,7 +6,7 @@
 use yii\helpers\StringHelper;
 use yii\helpers\Json;
 
-$nsInfo = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+$nsInfo = StringHelper::dirname(StringHelper::dirname(ltrim($generator->controllerClass, '\\')));
 $nsInfoA = explode('\\', $nsInfo);
 $moduleId = $nsInfoA[count($nsInfoA)-1];
 $modelName = str_replace('_', '-', $generator->tableName);

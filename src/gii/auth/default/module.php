@@ -5,7 +5,7 @@
 
 use yii\helpers\StringHelper;
 
-$ns = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+$ns = StringHelper::dirname(StringHelper::dirname(ltrim($generator->controllerClass, '\\')));
 
 echo "<?php\n";
 ?>

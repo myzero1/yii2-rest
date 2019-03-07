@@ -17,7 +17,7 @@ if ($modelClass === $searchModelClass) {
     $searchModelAlias = $searchModelClass . 'Search';
 }
 
-$prefix = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+$prefix = StringHelper::dirname(StringHelper::dirname(ltrim($generator->controllerClass, '\\')));
 
 $modelClass1 = str_replace('_', ' ', $generator->tableName);
 $modelClass2 = ucwords($modelClass1);
