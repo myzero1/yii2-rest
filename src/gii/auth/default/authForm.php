@@ -5,7 +5,7 @@
 
 use yii\helpers\StringHelper;
 
-$nsp = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\'))) . '\\models';
+$nsp = StringHelper::dirname(StringHelper::dirname(ltrim($generator->controllerClass, '\\'))) . '\\models';
 
 echo "<?php\n";
 ?>

@@ -5,7 +5,7 @@
 
 use yii\helpers\StringHelper;
 
-$ns = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\'))) . '\\models';
+$ns = StringHelper::dirname(StringHelper::dirname(ltrim($generator->controllerClass, '\\'))) . '\\models';
 
 $where = [];
 if (trim($generator->userNameFieldGroup1)) {
