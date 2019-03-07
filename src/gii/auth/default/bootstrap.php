@@ -5,7 +5,7 @@
 
 use yii\helpers\StringHelper;
 
-$ns = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+$ns = StringHelper::dirname(StringHelper::dirname(ltrim($generator->controllerClass, '\\')));
 $rulesFile = Yii::getAlias('@' . str_replace('\\', '/', $ns)) . '/rules.php';
 
 $moduleId = str_replace(StringHelper::dirname($ns).'\\', '', $ns);

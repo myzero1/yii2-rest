@@ -224,7 +224,7 @@ class Generator extends \yii\gii\Generator
         $modelClass2 = ucwords($modelClass1);
         $modelClass3 = str_replace(' ', '', $modelClass2);
         $modelGenerator->modelClass = $modelClass3;
-        $modelGenerator->ns = StringHelper::dirname(dirname($this->controllerClass)) . '\models';
+        $modelGenerator->ns = StringHelper::dirname(StringHelper::dirname($this->controllerClass)) . '\models';
         $modelGenerator->queryNs = $modelGenerator->ns;
         $defaultTemplate = Yii::getAlias('@vendor/myzero1/yii2-rest/src/gii/auth/model/default');
         $modelGenerator->templates['default'] = $defaultTemplate;

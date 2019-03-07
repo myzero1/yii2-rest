@@ -24,7 +24,7 @@ $urlParams = $generator->generateUrlParams();
 $actionParams = $generator->generateActionParams();
 $actionParamComments = $generator->generateActionParamComments();
 
-$prefix = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+$prefix = StringHelper::dirname(StringHelper::dirname(ltrim($generator->controllerClass, '\\')));
 
 echo "<?php\n";
 ?>

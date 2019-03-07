@@ -5,7 +5,7 @@
 
 use yii\helpers\StringHelper;
 
-$prefix = StringHelper::dirname(dirname(ltrim($generator->controllerClass, '\\')));
+$prefix = StringHelper::dirname(StringHelper::dirname(ltrim($generator->controllerClass, '\\')));
 
 echo "<?php\n";
 ?>
