@@ -2,26 +2,27 @@
 namespace myzero1\rest\swaggertools\config;
 
 /**
- * @SWG\Swagger(
- *     schemes={"http"},
- *     host="yii2rest.test",
- *     basePath="/rest",
- *     @SWG\Info(
- *         version="1.0.0",
- *         title="接口文档",
- *         description="Version: __1.0.0__",
- *         @SWG\Contact(name = "myzero1", email = "myzero1@sina.com")
- *     ),
- * )
- *
- * @SWG\Tag(
- *   name="user",
- *   description="用户相关操作",
- *   @SWG\ExternalDocumentation(
- *     description="Find out more about our store",
- *     url="http://swagger.io"
- *   )
- * )
+
+@SWG\Swagger(
+    schemes={"http"},
+    host="yii2rest.test",
+    basePath="/rest",
+    @SWG\Info(
+        version="1.0.0",
+        title="接口文档",
+        description="Version: __1.0.0__",
+        @SWG\Contact(
+            name = "myzero1", 
+            email = "myzero1@sina.com"
+        )
+    ),
+)
+
+@SWG\ExternalDocumentation(
+    description="You can convert the swagger.json to html2 files by swagger editor.",
+    url="https://editor.swagger.io/"
+)
+
  */
 
 /**
