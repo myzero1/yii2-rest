@@ -201,4 +201,5 @@ We can get the api document of html
     schemes: 
 	- http
 4、點擊Generate Client》html2把json轉換為html
+5、把“<style type="text/css">.sidenav > li.nav-header > a:hover{color:#094867;}</style>”添加到html的最后面
 ```
