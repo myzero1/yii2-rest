@@ -187,3 +187,18 @@ You can then access gii page to watch the rest generator.
 ```
 http://yii2rest2.test/gii/default/view?id=api-rest
 ```
+
+
+swagger json to html2
+-----
+
+We can get the api document of html
+
+```
+1、http://wh-shenji.test/site/api通過這個地址獲取wagger的json文件
+2、https://editor.swagger.io/把json文件內複製到這裡
+3、把schemes: '{http}'改為 
+    schemes: 
+	- http
+4、點擊Generate Client》html2把json轉換為html
+```
