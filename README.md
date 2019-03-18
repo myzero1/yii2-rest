@@ -195,11 +195,11 @@ swagger json to html2
 We can get the api document of html
 
 ```
-1、http://wh-shenji.test/site/api通過這個地址獲取wagger的json文件
-2、https://editor.swagger.io/把json文件內複製到這裡
-3、把schemes: '{http}'改為 
+1、http://wh-shenji.test/site/api通过这个地址获取wagger的json文件
+2、https://editor.swagger.io/把json文件内容复制到这里
+3、把schemes: '{http}'改为
     schemes: 
 	- http
-4、點擊Generate Client》html2把json轉換為html
+4、点击Generate Client》html2把json转换为html
 5、把“<style type="text/css">.sidenav > li.nav-header > a:hover{color:#094867;}</style>”添加到html的最后面
 ```
