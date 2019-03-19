@@ -203,3 +203,35 @@ We can get the api document of html
 4、點擊Generate Client》html2把json轉換為html
 5、把“<style type="text/css">.sidenav > li.nav-header > a:hover{color:#094867;}</style>”添加到html的最后面
 ```
+
+
+
+Ajax 请求api
+-----
+eg
+
+```
+
+var url = "http://172.16.62.242:8735/v1/auth/info";
+var type = "get"//POST、PUT、DELETE
+var authorization = "Bearer Y057DL29xjEwXHAGOVXW9PfGF-xsSIoW_1552974468";
+var data = {};
+
+$.ajax({
+    url: url,
+    type: type,//POST、PUT、DELETE
+	//data:JSON.stringify(myData),//你要传的参数
+	data: data,//你要传的参数
+	processData:false,//是否对参数进行序列化，会把{name:'huang',sex:1}序列化name='huang'&sex=1,默认为true。
+	contentType:"application/json",//这里是Header中自带的contentType
+    beforeSend: function (xhr) { 
+        xhr.setRequestHeader("Authorization", authorization);//你要传的参数
+    },
+    success: function (data) {
+        console.log(data);
+    },
+    error: function (xhr, textStatus, errorThrow) {
+        alert("error:"+xhr.readyState);
+    }
+});
+```
