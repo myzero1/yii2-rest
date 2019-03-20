@@ -13,6 +13,7 @@
     - [1.2. 模板使用](#12-模板使用)
         - [1.2.1. 安装插件](#121-安装插件)
         - [1.2.2. 使用模板](#122-使用模板)
+        - [1.2.3. 使用ajax测试api](#123-使用ajax测试api)
 
 <!-- /TOC -->
 
@@ -67,5 +68,36 @@
 ### 1.2.2. 使用模板
 
 直接复制本模板到markdown文件中，安装说明，进行相应的编辑就可以了。
+
+[&Uparrow;&Uparrow;&Uparrow;&Uparrow;&Uparrow;](#1-tables)
+
+
+
+### 1.2.3. 使用ajax测试api
+
+```js
+var url = "http://172.16.62.242:8735/v1/auth/info";
+var type = "get"//POST、PUT、DELETE
+var authorization = "Bearer Y057DL29xjEwXHAGOVXW9PfGF-xsSIoW_1552974468";
+var data = {};
+
+$.ajax({
+    url: url,
+    type: type,//POST、PUT、DELETE
+	//data:JSON.stringify(myData),//你要传的参数
+	data: data,//你要传的参数
+	processData:false,//是否对参数进行序列化，会把{name:'huang',sex:1}序列化name='huang'&sex=1,默认为true。
+	contentType:"application/json",//这里是Header中自带的contentType
+    beforeSend: function (xhr) { 
+        xhr.setRequestHeader("Authorization", authorization);//你要传的参数
+    },
+    success: function (data) {
+        console.log(data);
+    },
+    error: function (xhr, textStatus, errorThrow) {
+        alert("error:"+xhr.readyState);
+    }
+});
+```
 
 [&Uparrow;&Uparrow;&Uparrow;&Uparrow;&Uparrow;](#1-tables)
