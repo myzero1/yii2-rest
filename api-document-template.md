@@ -2,12 +2,6 @@
 API document `（version:1.0.1,auth:myzero1,date:2019/03/20）`
 ------
 
-<style>
-    table {
-        width: 100%;
-    }
-</style>
-
 # 1. tables
 
 <!-- TOC -->
