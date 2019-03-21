@@ -110,8 +110,7 @@ $.ajax({
 
 实际的api测试用例如下
 
-添加记录的示例
-------------
+**添加记录的示例**
 
 ```
 请求
@@ -135,8 +134,7 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
 
 ```
 
-获取单条数据的示例
-------------
+**获取单条数据的示例**
 
 ```
 请求
@@ -154,8 +152,7 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 
 ```
 
-获取列表的示例
-------------
+**获取列表的示例**
 
 ```
 请求
@@ -189,17 +186,19 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 #### 1.2.4.1. 全局说明
 > [返回目录](#1-目录)
 
-*api请求中有两中状态码，一个是http的状态码，一个是业务的状态码。前者是标准的http状态码，后者只有在前者为200或201的时候才会有。*
+*api请求中有两种状态码，一个是http的状态码，一个是业务的状态码。前者是标准的http状态码，后者只有在前者为200或201的时候才会有。*
 
 *业务状态码说明*
+
 |        业务状态码    |            说明                 |
 |---------------------|:-------------------------------:|
 |  0 | 返回正确  |
-| 7354XX | 客户错误  |
-| 7355XX | 服务端错误  |
+| 7354XX | 客户错误，一般是客户端参数错误  |
+| 7355XX | 服务端错，一般是服务端处理出现了意想不到的错误  |
 
 
 *返回的全局说明*
+
 |        返回的键值    |            说明                 |
 |---------------------|:-------------------------------:|
 | code | 业务状态码 |
@@ -217,6 +216,7 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 > [返回目录](#1-目录)
 
 `接口基本信息`
+
 |  类别 |  详情     |
 |-------|:---------:|
 |  用途 | 根据参数获取列表  |
@@ -225,6 +225,7 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 |  contentType | application/json |
 
 `参数说明`
+
 |  名称 |  字段的相关详细说明 | 示例 | 是否必填 （*:必填，默认非必填） |  类型（1:数字，默认字符串） |
 |-------|:-----------------:|:----:|:----------------------------:|:-------------------------:|
 | name | 用户名称 | "woogle"
@@ -232,6 +233,7 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 
 
 `返回说明（对返回值进行选择性的注释）`
+
 ```
 {
     "code": 0,
@@ -261,6 +263,7 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 > [返回目录](#1-目录)
 
 `接口基本信息`
+
 |  类别 |  详情     |
 |-------|:---------:|
 |  用途 | 根据参数获取列表  |
@@ -269,12 +272,14 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 |  contentType | application/json |
 
 `参数说明`
+
 |  名称 |  字段的相关详细说明 | 示例 | 是否必填 （*:必填，默认非必填） |  类型（1:数字，默认字符串） |
 |-------|:-----------------:|:----:|:----------------------------:|:-------------------------:|
 | name | 用户名称 | "woogle"| * |
 
 
 `返回说明（对返回值进行选择性的注释）`
+
 ```
 {
     "code": 0,
@@ -292,6 +297,7 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 > [返回目录](#1-目录)
 
 `接口基本信息`
+
 |  类别 |  详情     |
 |-------|:---------:|
 |  用途 | 根据参数获取列表  |
@@ -300,12 +306,14 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 |  contentType | application/json |
 
 `参数说明`
+
 |  名称 |  字段的相关详细说明 | 示例 | 是否必填 （*:必填，默认非必填） |  类型（1:数字，默认字符串） |
 |-------|:-----------------:|:----:|:----------------------------:|:-------------------------:|
 | id | 用户id | 1 | * | 1 |
 
 
 `返回说明（对返回值进行选择性的注释）`
+
 ```
 {
     "code": 0,
@@ -323,6 +331,7 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 > [返回目录](#1-目录)
 
 `接口基本信息`
+
 |  类别 |  详情     |
 |-------|:---------:|
 |  用途 | 根据参数获取列表  |
@@ -331,6 +340,7 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 |  contentType | application/json |
 
 `参数说明`
+
 |  名称 |  字段的相关详细说明 | 示例 | 是否必填 （*:必填，默认非必填） |  类型（1:数字，默认字符串） |
 |-------|:-----------------:|:----:|:----------------------------:|:-------------------------:|
 | {id} | 用户id | 1 | * | 1 |
@@ -338,6 +348,7 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 
 
 `返回说明（对返回值进行选择性的注释）`
+
 ```
 {
     "code": 0,
@@ -356,6 +367,7 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 
 
 `接口基本信息`
+
 |  类别 |  详情     |
 |-------|:---------:|
 |  用途 | 根据参数获取列表  |
@@ -364,12 +376,14 @@ curl -X GET --header 'Accept: application/json' --header 'Authorization: Bearer 
 |  contentType | application/json |
 
 `参数说明`
+
 |  名称 |  字段的相关详细说明 | 示例 | 是否必填 （*:必填，默认非必填） |  类型（1:数字，默认字符串） |
 |-------|:-----------------:|:----:|:----------------------------:|:-------------------------:|
 | {id} | 用户id | 1 | * | 1 |
 
 
 `返回说明（对返回值进行选择性的注释）`
+
 ```
 {
     "code": 0,
